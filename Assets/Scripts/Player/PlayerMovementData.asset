@@ -21,8 +21,8 @@ MonoBehaviour:
   runMaxSpeed: 15
   runAcceleration: 13
   runAccelAmount: 43.333332
-  runDecceleration: 2
-  runDeccelAmount: 6.6666665
+  runDecceleration: 1
+  runDeccelAmount: 3.3333333
   accelInAir: 0.195
   deccelInAir: 0.041
   doConserveMomentum: 1
@@ -37,4 +37,6 @@ MonoBehaviour:
   coyoteTime: 0.1
   jumpInputBufferTime: 0.15
   dashVelocity: 70
-  dashTime: 0.07
+  dashTime: 0.2
+  dashLenght: 0
+  dashBuffer: 0.1

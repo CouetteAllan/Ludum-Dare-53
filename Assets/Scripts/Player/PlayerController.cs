@@ -26,6 +26,9 @@ public class PlayerController : MonoBehaviour
     private float nextDashTime = 0.0f;
     private Vector2 dashDir;
     private float dashDuration;
+    private float dashBufferCount;
+    private bool isDashing = false;
+    private bool hasDashed = false;
 
     private PlayerScript player;
     private Animator animator;
@@ -40,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
     //Timers (also all fields, could be private and a method returning a bool could be used)
     public float LastOnGroundTime { get; private set; }
+    private float baseJumpBufferTime;
 
     private Vector2 _moveInput;
 
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [Header("Checks")]
     [SerializeField] private Transform _groundCheckPoint;
     [SerializeField] private Vector2 _groundCheckSize;
+    private Vector2 storedVelocity;
 
     private InputAction jumpAction;
     private InputAction moveAction;
@@ -63,6 +68,8 @@ public class PlayerController : MonoBehaviour
     private InputAction dashAction;
 
     private GameObject graphObject;
+
+    private Coroutine dashCoroutine;
     #endregion
     private void Awake()
     {
@@ -103,14 +110,7 @@ public class PlayerController : MonoBehaviour
 
     private void DashAction_performed(InputAction.CallbackContext obj)
     {
-        if (CanDash())
-        {
-            state = State.Dash;
-            nextDashTime = Time.time + dashCooldown;
-            dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
-            dashDuration = Data.dashTime;
-            graphObject.GetComponent<SpriteRenderer>().color = Color.magenta;
-        }
+        dashBufferCount = Data.dashBuffer;
     }
     #endregion
 
@@ -119,6 +119,7 @@ public class PlayerController : MonoBehaviour
         SetGravityScale(Data.gravityScale);
         IsFacingRight = true;
         animator = player.Animator;
+        baseJumpBufferTime = Data.jumpInputBufferTime;
     }
 
     private void Update()
@@ -129,31 +130,47 @@ public class PlayerController : MonoBehaviour
         LastPressedJumpTime -= Time.deltaTime;
 
         dashDuration -= Time.deltaTime;
+        dashBufferCount -= Time.deltaTime;
         #endregion
         _moveInput = moveAction.ReadValue<Vector2>();
-        if (Mathf.Abs(_moveInput.x) >= 0.01)
+        switch (state)
         {
-            CheckDirectionToFace(_moveInput.x > 0);
-            animator.SetBool("IsMoving", true);
+            case State.Normal:
+                if (Mathf.Abs(_moveInput.x) >= 0.01)
+                {
+                    CheckDirectionToFace(_moveInput.x > 0);
+                    animator.SetBool("IsMoving", true);
+                }
+                else
+                    animator.SetBool("IsMoving", false);
+                CheckGrounded();
+                SetUpGravity();
+                CheckJump();
+                if (CanDash())
+                {
+                    dashBufferCount = -1;
+                    state = State.Dash;
+                    nextDashTime = Time.time + dashCooldown;
+                    dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
+                    storedVelocity = this.rb.velocity;
+                    dashDuration = Data.dashTime;
+                    graphObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+                    Dash();
+                }
+                animator.SetFloat("SpeedY", this.rb.velocity.y);
+                break;
+            case State.Dash:
+                break;
         }
-        else
-            animator.SetBool("IsMoving", false);
-
-        CheckGrounded();
-        SetUpGravity();
-        CheckJump();
 
         animator.SetBool("IsGrounded", CanJump());
-        animator.SetFloat("SpeedY", this.rb.velocity.y);
     }
 
     private void FixedUpdate()
     {
-        Debug.Log(state);
         switch (state)
         {
             case State.Dash:
-                Dash();
                 break;
             case State.Normal:
                 Run();
@@ -251,13 +268,32 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
-        if(dashDuration <= 0.0f)
+        Data.jumpInputBufferTime = 0.5f;
+        if (dashCoroutine != null)
+            StopCoroutine(dashCoroutine);
+        dashCoroutine = StartCoroutine(DashCoroutine());
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        float dashStartTime = Time.time;
+        IsJumping = false;
+
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0f;
+        rb.drag = 0f;
+
+
+        while (Time.time <= dashStartTime + Data.dashTime)
         {
-            state = State.Normal;
-            graphObject.GetComponent<SpriteRenderer>().color = Color.white;
-            return;
+            rb.velocity = dashDir.normalized * Data.dashVelocity;
+            yield return null;
         }
-        rb.velocity = dashDir * Data.dashVelocity;
+
+        state = State.Normal;
+        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
+        rb.velocity /= 2.0f;
+        Data.jumpInputBufferTime = baseJumpBufferTime;
     }
 
 
@@ -340,7 +376,7 @@ public class PlayerController : MonoBehaviour
     private bool CanJump() => LastOnGroundTime > 0 && !IsJumping;
     private bool CanJumpCut() => IsJumping && rb.velocity.y > 0;
 
-    private bool CanDash() => state == State.Normal && Time.time >= nextDashTime; 
+    private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f;
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()
