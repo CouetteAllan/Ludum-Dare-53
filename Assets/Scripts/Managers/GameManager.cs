@@ -7,6 +7,8 @@ public enum GameState
 {
     InGame,
     Pause,
+    Win,
+    StartGame
     //...
 }
 
@@ -25,6 +27,8 @@ public class GameManager : Singleton<GameManager>
 
     #region Variables
     public GameState CurrentState { get; private set; }
+
+    public int ScoreP1 { get; set; }
     #endregion
 
     /// <summary>
@@ -47,4 +51,5 @@ public class GameManager : Singleton<GameManager>
 
         OnStateChanged?.Invoke(CurrentState);
     }
+
 }

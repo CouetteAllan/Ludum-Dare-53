@@ -44,9 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98ecb41e66aacf4785e0288da41171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPersistant: 0
   soundsEffects: []
-  musics: []
+  musics:
+  - name: BGM
+    clip: {fileID: 8300000, guid: dc76bdc2225d12f4583d5a1c488a5449, type: 3}
+    output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.608
+    pitch: 0
+    loop: 1
+    playOnAwake: 1
+    source: {fileID: 0}
 --- !u!1 &4015230900360512405
 GameObject:
   m_ObjectHideFlags: 0
