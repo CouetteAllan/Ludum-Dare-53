@@ -72,6 +72,7 @@ public class Building : MonoBehaviour
         {
             v.SetActive(false);
         }
+        PackageManager.Instance.SpawnPackage();
     }
 
     void SetColoredP2()
@@ -82,5 +83,6 @@ public class Building : MonoBehaviour
         {
             v.SetActive(false);
         }
+        PackageManager.Instance.SpawnPackage();
     }
 }
