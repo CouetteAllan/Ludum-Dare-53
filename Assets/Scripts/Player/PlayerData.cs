@@ -51,8 +51,12 @@ public class PlayerData : ScriptableObject
     [Header("Dash")]
     public float dashVelocity;
     public float dashTime;
-    public float dashLenght;
     public float dashBuffer = 0.1f;
+
+    [Header("Roll")]
+    public float rollVelocity;
+    public float rollTime;
+    public float rollGravityScale;
 
     //Unity Callback, called when the inspector updates
     private void OnValidate()

@@ -1,4 +1,5 @@
 using Rayqdr.Inputs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -12,10 +13,12 @@ using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action OnDropDown;
     private enum State
     {
         Normal,
-        Dash
+        Dash,
+        Roll
     }
     private State state;  
 
@@ -30,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private float dashBufferCount;
     private bool hasDashed = false;
 
+    [SerializeField] private float rollCooldown = 0.3f;
+    private float nextRollTime = 0.0f;
+
     private PlayerScript player;
     private Animator animator;
 
@@ -40,7 +46,8 @@ public class PlayerController : MonoBehaviour
 
     public bool IsFacingRight { get; private set; }
     public bool IsJumping { get; private set; }
-
+    private Collider2D colliderRef;
+    private bool canDropDown;
     //Timers (also all fields, could be private and a method returning a bool could be used)
     public float LastOnGroundTime { get; private set; }
     private float baseJumpBufferTime;
@@ -68,14 +75,17 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction interactAction;
     private InputAction dashAction;
+    private InputAction rollAction;
 
     private GameObject graphObject;
+    private Collider2D collisionBox;
 
     private Coroutine dashCoroutine;
     #endregion
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        collisionBox = this.GetComponent<CapsuleCollider2D>();
 
         player = GetComponent<PlayerScript>();
         graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
@@ -86,15 +96,23 @@ public class PlayerController : MonoBehaviour
         moveAction = inputAction.actions["Move"];
         interactAction = inputAction.actions["Interact"];
         dashAction = inputAction.actions["Dash"];
+        rollAction = inputAction.actions["Roll"];
         jumpAction.started += Jump_started;
         jumpAction.canceled += Jump_canceled;
         dashAction.performed += DashAction_performed;
+        rollAction.performed += RollAction_performed;
         #endregion
     }
 
     #region InputActionEvents
     private void Jump_started(InputAction.CallbackContext obj)
     {
+        //Check si sur une platforme collider, si oui, descendre de la platforme
+        if (CanDropDownFromPlatform() && OnDropDown != null)
+        {
+            OnDropDown();
+            return;
+        }
         LastPressedJumpTime = Data.jumpInputBufferTime;
     }
 
@@ -107,6 +125,13 @@ public class PlayerController : MonoBehaviour
     private void DashAction_performed(InputAction.CallbackContext obj)
     {
         dashBufferCount = Data.dashBuffer;
+    }
+
+    private void RollAction_performed(InputAction.CallbackContext obj)
+    {
+        //Perform Roll
+        if (CanRoll())
+            Roll();
     }
     #endregion
 
@@ -127,6 +152,7 @@ public class PlayerController : MonoBehaviour
 
         dashDuration -= Time.deltaTime;
         dashBufferCount -= Time.deltaTime;
+
         #endregion
         _moveInput = moveAction.ReadValue<Vector2>();
         switch (state)
@@ -140,7 +166,6 @@ public class PlayerController : MonoBehaviour
                 else
                     animator.SetBool("IsMoving", false);
                 CheckGrounded();
-                SetUpGravity();
                 CheckJump();
                 if (CanDash())
                 {
@@ -157,7 +182,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Dash:
                 break;
+            case State.Roll:
+                break;
         }
+        SetUpGravity();
 
         animator.SetBool("IsGrounded", CanJumpFromGround());
     }
@@ -238,7 +266,6 @@ public class PlayerController : MonoBehaviour
         //Jump
         if (CanJumpFromGround() && LastPressedJumpTime > 0) //can jump if jump has been buffered
         {
-            Debug.Log("i'm jumpin");
             IsJumping = true;
             _isJumpCut = false;
             _isJumpFalling = false;
@@ -262,8 +289,6 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * force * multiply, ForceMode2D.Impulse);
         //Instantier un feedback, particle effect
     }
-
-
     private void Dash()
     {
         Data.jumpInputBufferTime = 0.5f;
@@ -271,7 +296,6 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashCoroutine());
     }
-
     private IEnumerator DashCoroutine()
     {
         float dashStartTime = Time.time;
@@ -294,8 +318,59 @@ public class PlayerController : MonoBehaviour
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
     }
+    private void Roll()
+    {
+        //Passer en state Roll
+        state = State.Roll;
+        graphObject.GetComponent<SpriteRenderer>().color = Color.green;
+        StartCoroutine(RollCoroutine());
+    }
+    private IEnumerator RollCoroutine()
+    {
+        animator.SetTrigger("Roll");
+        //Enlever les collisions entre les deux joueurs
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer, true);
 
+        float rollStartTime = Time.time;
 
+        rb.velocity = Vector2.zero;
+        rb.drag = 0f;
+
+        Vector2 rollDir = new Vector2(this.transform.localScale.x, 0);
+
+        while (Time.time <= rollStartTime + Data.rollTime)
+        {
+            //perform roll physics
+            rb.velocity = rollDir.normalized * Data.rollVelocity;
+            yield return null;
+        }
+
+        nextRollTime = Time.time + rollCooldown;
+        Physics2D.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer, false);
+        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
+        rb.velocity /= 3.0f;
+        state = State.Normal;
+    }
+    private void DropDown()
+    {
+        if (dropDownCoroutine != null)
+            StopCoroutine(dropDownCoroutine);
+        dropDownCoroutine = StartCoroutine(HandleCollisions());
+
+        float dropDownPos = 0.1f;
+        rb.transform.position = new Vector2(rb.transform.position.x, rb.transform.position.y - dropDownPos);
+    }
+    private Coroutine dropDownCoroutine;
+    IEnumerator HandleCollisions()
+    {
+        if(colliderRef != null)
+        {
+            float timeBeforeReEnableCollisions = 0.3f;
+
+            yield return new WaitForSeconds(timeBeforeReEnableCollisions);
+
+        }
+    }
     private void SetGravityScale(float scale)
     {
         rb.gravityScale = scale;
@@ -340,6 +415,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Dash:
                 break;
+            case State.Roll:
+                
+                SetGravityScale(Data.gravityScale * Data.rollGravityScale);
+                break;
         }
        
         #endregion
@@ -349,12 +428,22 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsJumping)
         {
+            var collidersUnderFeet = Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer);
             //Ground Check
-            if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer) && !IsJumping) //checks if set box overlaps with ground
+            if (collidersUnderFeet) //checks if set box overlaps with ground
             {
-                LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
-                Debug.Log(LastOnGroundTime);
-                hasDashed = false;
+                colliderRef = collidersUnderFeet;
+                if (!IsJumping)
+                {
+                    canDropDown = false;
+                    if (collidersUnderFeet.TryGetComponent<PlatformEffector2D>(out PlatformEffector2D platform))
+                    {
+                        canDropDown = true;
+                    }
+                    LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
+                    Debug.Log(LastOnGroundTime);
+                    hasDashed = false;
+                }
             }
         }
     }
@@ -375,9 +464,10 @@ public class PlayerController : MonoBehaviour
     }
     private bool CanJumpFromGround() => LastOnGroundTime > 0 && !IsJumping;
     private bool CanJumpCut() => IsJumping && rb.velocity.y > 0;
-
     private bool HasDashButStillInTheAir() => hasDashed && LastOnGroundTime <= 0.0f; 
     private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f && !HasDashButStillInTheAir();
+    private bool CanRoll() => state == State.Normal && Time.time >= nextRollTime;
+    private bool CanDropDownFromPlatform() => state == State.Normal && canDropDown && _moveInput.y < 0.0f;
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()

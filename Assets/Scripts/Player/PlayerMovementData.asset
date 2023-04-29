@@ -38,5 +38,7 @@ MonoBehaviour:
   jumpInputBufferTime: 0.15
   dashVelocity: 70
   dashTime: 0.2
-  dashLenght: 0
   dashBuffer: 0.1
+  rollVelocity: 30
+  rollTime: 0.3
+  rollGravityScale: 6
