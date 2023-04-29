@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     private PlayerScript player;
     private Animator animator;
 
-    private PlayerInputActionScript playerInput;
-    public PlayerInputActionScript PlayerInput { get => playerInput; }
+
+    private PlayerInput inputAction;
 
     private Rigidbody2D rb;
 
@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
     [Header("Checks")]
     [SerializeField] private Transform _groundCheckPoint;
     [SerializeField] private Vector2 _groundCheckSize;
+
+    private InputAction jumpAction;
+    private InputAction moveAction;
+    private InputAction interactAction;
     #endregion
     private void Awake()
     {
@@ -51,11 +55,14 @@ public class PlayerController : MonoBehaviour
 
         player = GetComponent<PlayerScript>();
         #region Input Related Stuff
-        playerInput = new PlayerInputActionScript();
-        playerInput.Enable();
-        playerInput.Player.Move.performed += Move_performed;
-        playerInput.Player.Jump.started += Jump_started;
-        playerInput.Player.Jump.canceled += Jump_canceled;
+        inputAction = GetComponent<PlayerInput>();
+
+        jumpAction = inputAction.actions["Jump"];
+        moveAction = inputAction.actions["Move"];
+        interactAction = inputAction.actions["Interact"];
+        moveAction.performed += Move_performed;
+        jumpAction.started += Jump_started;
+        jumpAction.canceled += Jump_canceled;
         #endregion
     }
 
@@ -92,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
         LastPressedJumpTime -= Time.deltaTime;
         #endregion
-        _moveInput = playerInput.Player.Move.ReadValue<Vector2>();
+        _moveInput = moveAction.ReadValue<Vector2>();
         if (Mathf.Abs(_moveInput.x) >= 0.01)
         {
             CheckDirectionToFace(_moveInput.x > 0);
@@ -283,9 +290,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        playerInput.Player.Jump.started -= Jump_started;
-        playerInput.Player.Move.performed -= Move_performed;
-        playerInput.Player.Jump.canceled -= Jump_canceled;
-        playerInput.Disable();
+        jumpAction.started -= Jump_started;
+        moveAction.performed -= Move_performed;
+        jumpAction.canceled -= Jump_canceled;
     }
 }
