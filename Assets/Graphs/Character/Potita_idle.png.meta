@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e9e647f741ca0f946905aaabe25759a1
+guid: c3ab2ec0fa1f97c4297a4ba73ed2bea8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: potits_0
+      name: Potita_idle_0
       rect:
         serializedVersion: 2
-        x: 12
-        y: 14
-        width: 51
-        height: 84
+        x: 0
+        y: 0
+        width: 100
+        height: 100
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bb9f6ca93a2ddb4dbf91d99edac3b90
-      internalID: -777565391
+      spriteID: 611047c381f98c84cb39aa95b233ccfa
+      internalID: 664627809
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: potits_1
+      name: Potita_idle_1
       rect:
         serializedVersion: 2
-        x: 76
-        y: 14
-        width: 44
-        height: 84
+        x: 100
+        y: 0
+        width: 100
+        height: 100
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7e058b0c65db7df4cb7d3c6fa4e934e5
-      internalID: -1186309
+      spriteID: fe862ec6b198f094caf168f7030abda2
+      internalID: -674592428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Potita_idle_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 100
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0ff8a6a34fbe854992ddcd42d0272c3
+      internalID: 538871194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Potita_idle_3
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 100
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78eb7f1b9ab348444ae6567a4fab8e15
+      internalID: -350703390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Potita_idle_4
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 100
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4663d4ecf72451e45ba161a92b4f1ae0
+      internalID: -1830263520
       vertices: []
       indices: 
       edges: []
@@ -157,8 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      potits_0: -777565391
-      potits_1: -1186309
+      Potita_idle_0: 664627809
+      Potita_idle_1: -674592428
+      Potita_idle_2: 538871194
+      Potita_idle_3: -350703390
+      Potita_idle_4: -1830263520
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

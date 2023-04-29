@@ -11,9 +11,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum State
+    {
+        Normal,
+        Dash
+    }
+    private State state;  
+
     #region Variables
     [Tooltip("Put here the desired Movement Data")]
     [SerializeField] private PlayerData Data;
+
+    [SerializeField] private float dashCooldown = 1.0f;
+    private float nextDashTime = 0.0f;
+    private Vector2 dashDir;
+    private float dashDuration;
 
     private PlayerScript player;
     private Animator animator;
@@ -48,24 +60,29 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction moveAction;
     private InputAction interactAction;
+    private InputAction dashAction;
+
+    private GameObject graphObject;
     #endregion
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
 
         player = GetComponent<PlayerScript>();
+        graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
         #region Input Related Stuff
         inputAction = GetComponent<PlayerInput>();
 
         jumpAction = inputAction.actions["Jump"];
         moveAction = inputAction.actions["Move"];
         interactAction = inputAction.actions["Interact"];
+        dashAction = inputAction.actions["Dash"];
         moveAction.performed += Move_performed;
         jumpAction.started += Jump_started;
         jumpAction.canceled += Jump_canceled;
+        dashAction.performed += DashAction_performed;
         #endregion
     }
-
 
     #region InputActionEvents
     private void Move_performed(InputAction.CallbackContext obj)
@@ -83,6 +100,18 @@ public class PlayerController : MonoBehaviour
         if (CanJumpCut())
             _isJumpCut = true;
     }
+
+    private void DashAction_performed(InputAction.CallbackContext obj)
+    {
+        if (CanDash())
+        {
+            state = State.Dash;
+            nextDashTime = Time.time + dashCooldown;
+            dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
+            dashDuration = Data.dashTime;
+            graphObject.GetComponent<SpriteRenderer>().color = Color.magenta;
+        }
+    }
     #endregion
 
     void Start()
@@ -98,6 +127,8 @@ public class PlayerController : MonoBehaviour
         LastOnGroundTime -= Time.deltaTime;
 
         LastPressedJumpTime -= Time.deltaTime;
+
+        dashDuration -= Time.deltaTime;
         #endregion
         _moveInput = moveAction.ReadValue<Vector2>();
         if (Mathf.Abs(_moveInput.x) >= 0.01)
@@ -118,7 +149,16 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Run();
+        Debug.Log(state);
+        switch (state)
+        {
+            case State.Dash:
+                Dash();
+                break;
+            case State.Normal:
+                Run();
+                break;
+        }
     }
 
     private void Run()
@@ -209,6 +249,18 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
     }
 
+    private void Dash()
+    {
+        if(dashDuration <= 0.0f)
+        {
+            state = State.Normal;
+            graphObject.GetComponent<SpriteRenderer>().color = Color.white;
+            return;
+        }
+        rb.velocity = dashDir * Data.dashVelocity;
+    }
+
+
     private void SetGravityScale(float scale)
     {
         rb.gravityScale = scale;
@@ -217,36 +269,44 @@ public class PlayerController : MonoBehaviour
     private void SetUpGravity()
     {
         #region GRAVITY
-        //Higher gravity if we've released the jump input or are falling
-        if (rb.velocity.y < 0 && _moveInput.y < 0)
+        switch (state)
         {
-            //Much higher gravity if holding down
-            SetGravityScale(Data.gravityScale * Data.fastFallGravityMult);
-            //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFastFallSpeed));
+            case State.Normal:
+                //Higher gravity if we've released the jump input or are falling
+                if (rb.velocity.y < 0 && _moveInput.y < 0)
+                {
+                    //Much higher gravity if holding down
+                    SetGravityScale(Data.gravityScale * Data.fastFallGravityMult);
+                    //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
+                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFastFallSpeed));
+                }
+                else if (_isJumpCut)
+                {
+                    //Higher gravity if jump button released
+                    SetGravityScale(Data.gravityScale * Data.jumpCutGravityMult);
+                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
+                }
+                else if ((IsJumping || _isJumpFalling) && Mathf.Abs(rb.velocity.y) < Data.jumpHangTimeThreshold)
+                {
+                    SetGravityScale(Data.gravityScale * Data.jumpHangGravityMult);
+                }
+                else if (rb.velocity.y < 0)
+                {
+                    //Higher gravity if falling
+                    SetGravityScale(Data.gravityScale * Data.fallGravityMult);
+                    //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
+                    rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
+                }
+                else
+                {
+                    //Default gravity if standing on a platform or moving upwards
+                    SetGravityScale(Data.gravityScale);
+                }
+                break;
+            case State.Dash:
+                break;
         }
-        else if (_isJumpCut)
-        {
-            //Higher gravity if jump button released
-            SetGravityScale(Data.gravityScale * Data.jumpCutGravityMult);
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
-        }
-        else if ((IsJumping || _isJumpFalling) && Mathf.Abs(rb.velocity.y) < Data.jumpHangTimeThreshold)
-        {
-            SetGravityScale(Data.gravityScale * Data.jumpHangGravityMult);
-        }
-        else if (rb.velocity.y < 0)
-        {
-            //Higher gravity if falling
-            SetGravityScale(Data.gravityScale * Data.fallGravityMult);
-            //Caps maximum fall speed, so when falling over large distances we don't accelerate to insanely high speeds
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -Data.maxFallSpeed));
-        }
-        else
-        {
-            //Default gravity if standing on a platform or moving upwards
-            SetGravityScale(Data.gravityScale);
-        }
+       
         #endregion
     }
 
@@ -279,6 +339,8 @@ public class PlayerController : MonoBehaviour
     }
     private bool CanJump() => LastOnGroundTime > 0 && !IsJumping;
     private bool CanJumpCut() => IsJumping && rb.velocity.y > 0;
+
+    private bool CanDash() => state == State.Normal && Time.time >= nextDashTime; 
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()
