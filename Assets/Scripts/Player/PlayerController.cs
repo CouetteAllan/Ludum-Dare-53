@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-
+        player = GetComponent<PlayerScript>();
         #region Input Related Stuff
         playerInput = new PlayerInputActionScript();
         playerInput.Enable();
@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         SetGravityScale(Data.gravityScale);
         IsFacingRight = true;
+        animator = player.Animator;
     }
 
     private void Update()
@@ -95,19 +96,17 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(_moveInput.x) >= 0.01)
         {
             CheckDirectionToFace(_moveInput.x > 0);
-            /*animator.SetBool("IsMoving", true);*/
+            animator.SetBool("IsMoving", true);
         }
         else
-            //animator.SetBool("IsMoving", false);
+            animator.SetBool("IsMoving", false);
 
         CheckGrounded();
         SetUpGravity();
         CheckJump();
 
-        Debug.Log("Can jump: " + CanJump());
-
-       /* animator.SetBool("IsGrounded", CanJump());
-        animator.SetFloat("SpeedY", this.rb.velocity.y);*/
+        animator.SetBool("IsGrounded", CanJump());
+        animator.SetFloat("SpeedY", this.rb.velocity.y);
     }
 
     private void FixedUpdate()
@@ -184,7 +183,7 @@ public class PlayerController : MonoBehaviour
             _isJumpCut = false;
             _isJumpFalling = false;
             Jump();
-            //animator.SetTrigger("Jump");
+            animator.SetTrigger("Jump");
         }
     }
     private void Jump()
