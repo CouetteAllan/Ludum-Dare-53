@@ -82,6 +82,8 @@ public class PlayerController : MonoBehaviour
 
     private Coroutine dashCoroutine;
     #endregion
+    [SerializeField] private ParticleHandle particles;
+    private bool playRunParticle = false;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -175,7 +177,6 @@ public class PlayerController : MonoBehaviour
                     dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
                     storedVelocity = this.rb.velocity;
                     dashDuration = Data.dashTime;
-                    graphObject.GetComponent<SpriteRenderer>().color = Color.magenta;
                     Dash();
                 }
                 animator.SetFloat("SpeedY", this.rb.velocity.y);
@@ -300,6 +301,7 @@ public class PlayerController : MonoBehaviour
     {
         float dashStartTime = Time.time;
         IsJumping = false;
+        animator.SetTrigger("Dash");
 
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
@@ -313,7 +315,7 @@ public class PlayerController : MonoBehaviour
         }
 
         state = State.Normal;
-        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
+        animator.SetTrigger("EndDash");
         rb.velocity /= 2.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
@@ -451,7 +453,10 @@ public class PlayerController : MonoBehaviour
     public void CheckDirectionToFace(bool isMovingRight)
     {
         if (isMovingRight != IsFacingRight)
+        {
             Turn();
+            particles.PlayEffect("Run",!isMovingRight);
+        }
     }
     private void Turn()
     {

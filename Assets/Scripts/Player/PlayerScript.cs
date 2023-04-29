@@ -22,4 +22,9 @@ public class PlayerScript : MonoBehaviour
     {
         
     }
+
+    private void OnHit()
+    {
+        //Instancier jouer l'FX de hit.
+    }
 }
