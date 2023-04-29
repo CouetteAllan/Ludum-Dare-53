@@ -36,15 +36,15 @@ public class Building : MonoBehaviour
         switch (newState)
         {
             case State.Active:
-                CurrentState = State.Active;
+
                 SetActive();
                 break;
             case State.ColoredP1:
-                CurrentState = State.ColoredP1;
+                
                 SetColoredP1();
                 break;
             case State.ColoredP2:
-                CurrentState = State.ColoredP2;
+                
                 SetColoredP2();
                 break;
         }
@@ -73,6 +73,12 @@ public class Building : MonoBehaviour
             v.SetActive(false);
         }
         PackageManager.Instance.SpawnPackage();
+        BuildingManager.Instance.ActivateRandomBuilding();
+        if (CurrentState == State.ColoredP2)
+            GameManager.Instance.ScoreP2--;
+        GameManager.Instance.ScoreP1++;
+
+        CurrentState = State.ColoredP1;
     }
 
     void SetColoredP2()
@@ -84,5 +90,11 @@ public class Building : MonoBehaviour
             v.SetActive(false);
         }
         PackageManager.Instance.SpawnPackage();
+        BuildingManager.Instance.ActivateRandomBuilding();
+        if(CurrentState == State.ColoredP1)
+            GameManager.Instance.ScoreP1--;
+        GameManager.Instance.ScoreP2++;
+
+        CurrentState = State.ColoredP2;
     }
 }

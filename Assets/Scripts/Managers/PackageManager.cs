@@ -10,16 +10,16 @@ public class PackageManager : Singleton<PackageManager>
 
     GameObject currentPackage;
 
-    private void Start()
-    {
-        SpawnPackage();
-    }
-
     public void SpawnPackage()
     {
         if (currentPackage)
             Destroy(currentPackage);
         currentPackage = Instantiate(packagePrefab,spawns[0].transform);
+    }
+
+    private void Start()
+    {
+        SpawnPackage();
     }
 
     /*private void Update()

@@ -17,11 +17,16 @@ public class BuildingManager : Singleton<BuildingManager>
         buildings[rand].ChangeState(State.Active);
     }
 
-    private void Update()
+    private void Start()
+    {
+        ActivateRandomBuilding();
+    }
+
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
             ActivateRandomBuilding();
         }
-    }
+    }*/
 }

@@ -1,10 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
+    MainMenu,
     InGame,
     Pause,
     Win,
@@ -28,7 +28,12 @@ public class GameManager : Singleton<GameManager>
     #region Variables
     public GameState CurrentState { get; private set; }
 
-    public int ScoreP1 { get; set; }
+    public float GlobalTimer { get; private set; }
+
+    public float ScoreP1 { get; set; }
+
+    public float ScoreP2 { get; set; }
+
     #endregion
 
     /// <summary>
@@ -43,13 +48,56 @@ public class GameManager : Singleton<GameManager>
         CurrentState = newState;
         switch (CurrentState)
         {
+            case GameState.StartGame:
+                StartGame();
+                break;
+            case GameState.MainMenu:
+                ToMenu();
+                break;
             case GameState.InGame:
+                InGame();
                 break;
             case GameState.Pause:
+                Pause();
                 break;
         }
 
         OnStateChanged?.Invoke(CurrentState);
+    }
+
+    #region States
+    public void StartGame()
+    {
+        //àchanger
+        SceneManager.LoadScene("sceneQuentin");
+        GlobalTimer = 60;
+        ChangeGameState(GameState.InGame);
+    }
+
+    public void InGame()
+    {
+        
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene("BootScene");
+    }
+
+    public void Pause()
+    {
+        
+    }
+    #endregion
+
+    public void Update()
+    {
+        if(CurrentState == GameState.InGame)
+        {
+            GlobalTimer -= Time.deltaTime;
+            if (GlobalTimer <= 0)
+                ChangeGameState(GameState.Win);
+        }
     }
 
 }
