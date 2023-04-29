@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 /*
  *              With the help of @DawnosaurDev at youtube.com/c/DawnosaurStudios
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 dashDir;
     private float dashDuration;
     private float dashBufferCount;
-    private bool isDashing = false;
     private bool hasDashed = false;
 
     private PlayerScript player;
@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     //Timers (also all fields, could be private and a method returning a bool could be used)
     public float LastOnGroundTime { get; private set; }
     private float baseJumpBufferTime;
+    private const float FIRST_JUMP_MULTIPLIER = 1;
+    private const float SECOND_JUMP_MULTIPLIER = 0.5f;
 
     private Vector2 _moveInput;
 
@@ -84,7 +86,6 @@ public class PlayerController : MonoBehaviour
         moveAction = inputAction.actions["Move"];
         interactAction = inputAction.actions["Interact"];
         dashAction = inputAction.actions["Dash"];
-        moveAction.performed += Move_performed;
         jumpAction.started += Jump_started;
         jumpAction.canceled += Jump_canceled;
         dashAction.performed += DashAction_performed;
@@ -92,11 +93,6 @@ public class PlayerController : MonoBehaviour
     }
 
     #region InputActionEvents
-    private void Move_performed(InputAction.CallbackContext obj)
-    {
-
-    }
-
     private void Jump_started(InputAction.CallbackContext obj)
     {
         LastPressedJumpTime = Data.jumpInputBufferTime;
@@ -163,7 +159,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        animator.SetBool("IsGrounded", CanJump());
+        animator.SetBool("IsGrounded", CanJumpFromGround());
     }
 
     private void FixedUpdate()
@@ -240,17 +236,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump
-        if (CanJump() && LastPressedJumpTime > 0) //can jump if jump has been buffered
+        if (CanJumpFromGround() && LastPressedJumpTime > 0) //can jump if jump has been buffered
         {
             Debug.Log("i'm jumpin");
             IsJumping = true;
             _isJumpCut = false;
             _isJumpFalling = false;
-            Jump();
+            Jump(FIRST_JUMP_MULTIPLIER);
             animator.SetTrigger("Jump");
         }
     }
-    private void Jump()
+    private void Jump(float multiply)
     {
         //Ensures we can't call Jump multiple times from one press
         LastPressedJumpTime = 0;
@@ -263,8 +259,10 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.y < 0)
             force -= rb.velocity.y;
 
-        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * force * multiply, ForceMode2D.Impulse);
+        //Instantier un feedback, particle effect
     }
+
 
     private void Dash()
     {
@@ -294,6 +292,7 @@ public class PlayerController : MonoBehaviour
         graphObject.GetComponent<SpriteRenderer>().color = Color.white;
         rb.velocity /= 2.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
+        hasDashed = true;
     }
 
 
@@ -355,6 +354,7 @@ public class PlayerController : MonoBehaviour
             {
                 LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
                 Debug.Log(LastOnGroundTime);
+                hasDashed = false;
             }
         }
     }
@@ -373,10 +373,11 @@ public class PlayerController : MonoBehaviour
 
         IsFacingRight = !IsFacingRight;
     }
-    private bool CanJump() => LastOnGroundTime > 0 && !IsJumping;
+    private bool CanJumpFromGround() => LastOnGroundTime > 0 && !IsJumping;
     private bool CanJumpCut() => IsJumping && rb.velocity.y > 0;
 
-    private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f;
+    private bool HasDashButStillInTheAir() => hasDashed && LastOnGroundTime <= 0.0f; 
+    private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f && !HasDashButStillInTheAir();
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()
@@ -389,7 +390,7 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         jumpAction.started -= Jump_started;
-        moveAction.performed -= Move_performed;
         jumpAction.canceled -= Jump_canceled;
+        dashAction.performed -= DashAction_performed;
     }
 }
