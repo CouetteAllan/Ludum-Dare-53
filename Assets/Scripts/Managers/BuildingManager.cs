@@ -10,9 +10,10 @@ public class BuildingManager : Singleton<BuildingManager>
     public void ActivateRandomBuilding()
     {
         int rand;
-        do {
+        do
+        {
             rand = Random.Range(0, buildings.Count);
-        } while (buildings[rand].CurrentState != State.Inactive);
+        } while (buildings[rand].CurrentState == State.Active);
         buildings[rand].ChangeState(State.Active);
     }
 

@@ -6,16 +6,27 @@ public enum State
 {
     Inactive,
     Active,
-    Colored
+    ColoredP1,
+    ColoredP2
 }
 
 
 public class Building : MonoBehaviour
 {
+    [System.NonSerialized]
     public State CurrentState = State.Inactive;
 
-    /*[SerializeField]
-    List<>*/
+    [SerializeField]
+    List<GameObject> Spots;
+
+    private void Start()
+    {
+        foreach(var v in Spots)
+        {
+            v.GetComponent<Spot>().parentBuilding = this;
+            v.SetActive(false);
+        }
+    }
 
     public void ChangeState(State newState)
     {
@@ -25,11 +36,16 @@ public class Building : MonoBehaviour
         switch (newState)
         {
             case State.Active:
+                CurrentState = State.Active;
                 SetActive();
                 break;
-            case State.Colored:
-                if(CurrentState == State.Active)
-                    SetColored();
+            case State.ColoredP1:
+                CurrentState = State.ColoredP1;
+                SetColoredP1();
+                break;
+            case State.ColoredP2:
+                CurrentState = State.ColoredP2;
+                SetColoredP2();
                 break;
         }
     }
@@ -37,12 +53,34 @@ public class Building : MonoBehaviour
     void SetActive()
     {
         CurrentState = State.Active;
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        //this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+        RandomSpotActive();
     }
 
-    void SetColored()
+    void RandomSpotActive()
     {
-        CurrentState = State.Colored;
+        int rand;
+        rand = Random.Range(0, Spots.Count);
+        Spots[rand].SetActive(true);
+    }
+
+    void SetColoredP1()
+    {
+        //mettre couleur p1p2
         this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        foreach (var v in Spots)
+        {
+            v.SetActive(false);
+        }
+    }
+
+    void SetColoredP2()
+    {
+        //mettre couleur p1p2
+        this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        foreach (var v in Spots)
+        {
+            v.SetActive(false);
+        }
     }
 }

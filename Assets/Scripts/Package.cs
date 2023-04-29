@@ -18,10 +18,10 @@ public class Package : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Building building = collision.gameObject.GetComponent<Building>();
-        if(building != null)
+        Spot spot = collision.gameObject.GetComponent<Spot>();
+        if(spot != null)
         {
-            building.ChangeState(State.Colored);
+            spot.parentBuilding.ChangeState(State.ColoredP1);
         }
     }
 }
