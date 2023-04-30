@@ -10,10 +10,15 @@ public class SoundManager : Singleton<SoundManager>
     public Sound[] soundsEffects;
     public Sound[] musics;
 
+    public AudioMixer audioMix;
+
     public float masterVolume = 0.5f, musicVolume = 0.5f, sfxVolume = 0.5f;
 
     protected override void Awake()
     {
+        audioMix.GetFloat("Master",out masterVolume);
+        audioMix.GetFloat("Musics", out musicVolume);
+        audioMix.GetFloat("Sound Effect", out sfxVolume);
         base.Awake();
 
         foreach (Sound s in soundsEffects)
@@ -114,33 +119,36 @@ public class SoundManager : Singleton<SoundManager>
 
     public void ModifyAllVolume(float i)
     {
+        audioMix.SetFloat("Master", i);
         masterVolume = i;
-        foreach (Sound s in soundsEffects)
+        /*foreach (Sound s in soundsEffects)
         {
             s.source.volume = i+sfxVolume/2;
         }
         foreach (Sound s in musics)
         {
             s.source.volume = i+musicVolume/2;
-        }
+        }*/
     }
 
     public void ModifyMusicVolume(float i)
     {
+        audioMix.SetFloat("Musics", i);
         musicVolume = i;
-        foreach (Sound s in musics)
+        /*foreach (Sound s in musics)
         {
             s.source.volume = i+masterVolume/2;
-        }
+        }*/
     }
 
     public void ModifySFXVolume(float i)
     {
+        audioMix.SetFloat("Sound Effect", i);
         sfxVolume = i;
-        foreach (Sound s in soundsEffects)
+        /*foreach (Sound s in soundsEffects)
         {
             s.source.volume = i+masterVolume/2;
-        }
+        }*/
     }
 
     public void ModifyPitch(string name, float pitch)
