@@ -30,13 +30,15 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
             case GameState.MainMenu:
                 break;
             case GameState.InGame:
-                SpawnPlayer();
                 break;
             case GameState.Pause:
                 break;
             case GameState.Win:
                 break;
             case GameState.StartGame:
+                break;
+            case GameState.DebutGame:
+                SpawnPlayer();
                 break;
         }
     }
@@ -49,7 +51,16 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
         {
             var playerInput = PlayerInputManager.instance.JoinPlayer(i);
             playerInput.transform.position = spawnPoints[Random.Range(0, spawnPoints.Length)].transform.position;
+            var playerRef = playerInput.gameObject.GetComponent<PlayerScript>();
+            if(i == 0)
+                playerRef.Init(GameManager.Instance.Player1data);
+            else if (i == 1)
+            {
+                Debug.Log(GameManager.Instance.Player2data + "Player 2 init ?");
+                playerRef.Init(GameManager.Instance.Player2data);
+            }
         }
+        GameManager.Instance.ChangeGameState(GameState.InGame);
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)

@@ -23,9 +23,8 @@ public class MainMenuManager : MonoBehaviour
 
     private int currentP1;
     private int currentP2;
-    public List<Sprite> spriteListP1;
+    public List<PlayerCharacter> characterDataList;
     public GameObject spriteP1;
-    public List<Sprite> spriteListP2;
     public GameObject spriteP2;
     public Button LeftButtonP1, RightButtonP1;
     public Button LeftButtonP2, RightButtonP2;
@@ -111,45 +110,49 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartGame()
     {
-        GameManager.Instance.ChangeGameState(GameState.StartGame);
+        var gameManager = GameManager.Instance;
+        //Set up les characters data séléctionnés
+
+        gameManager.SetFirstCharacter(characterDataList[currentP1]);
+        gameManager.SetSecondCharacter(characterDataList[currentP2]);
+        gameManager.ChangeGameState(GameState.StartGame);
     }
 
     private void LeftP1()
     {
         if (currentP1 == 0)
-            currentP1 = spriteListP1.Count-1;
+            currentP1 = characterDataList.Count-1;
         else
             currentP1--;
-        spriteP1.GetComponent<Image>().sprite = spriteListP1[currentP1];
+        spriteP1.GetComponent<Image>().sprite = characterDataList[currentP1].art;
     }
 
     private void RightP1()
     {
-        if (currentP1 == spriteListP1.Count-1)
+        if (currentP1 == characterDataList.Count-1)
             currentP1 = 0;
         else
             currentP1++;
-        spriteP1.GetComponent<Image>().sprite = spriteListP1[currentP1];
+        spriteP1.GetComponent<Image>().sprite = characterDataList[currentP1].art;
     }
 
     private void LeftP2()
     {
         if (currentP2 == 0)
-            currentP2 = spriteListP2.Count - 1;
+            currentP2 = characterDataList.Count - 1;
         else
             currentP2--;
-        spriteP2.GetComponent<Image>().sprite = spriteListP2[currentP2];
+        spriteP2.GetComponent<Image>().sprite = characterDataList[currentP2].art;
     }
 
     private void RightP2()
     {
-        if (currentP2 == spriteListP2.Count - 1)
+        if (currentP2 == characterDataList.Count - 1)
             currentP2 = 0;
         else
             currentP2++;
-        spriteP2.GetComponent<Image>().sprite = spriteListP2[currentP2];
+        spriteP2.GetComponent<Image>().sprite = characterDataList[currentP2].art;
     }
 
     #endregion
-
 }

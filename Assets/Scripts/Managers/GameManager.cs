@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,8 +34,10 @@ public class GameManager : Singleton<GameManager>
 
     public float GlobalTimer { get; private set; }
 
+    public PlayerCharacter Player1data { get; private set; }
     public float ScoreP1 { get; set; }
 
+    public  PlayerCharacter Player2data { get; private set; }
     public float ScoreP2 { get; set; }
 
     #endregion
@@ -56,6 +59,9 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.StartGame:
                 StartCoroutine(StartGame());
+                break;
+            case GameState.DebutGame:
+                //Pour init les joueurs
                 break;
             case GameState.InGame:
                 InGame();
@@ -81,8 +87,7 @@ public class GameManager : Singleton<GameManager>
             yield return null;
         }
         GlobalTimer = 60.0f;
-        ChangeGameState(GameState.InGame);
-
+        ChangeGameState(GameState.DebutGame);
     }
 
 
@@ -111,6 +116,16 @@ public class GameManager : Singleton<GameManager>
             if (GlobalTimer <= 0)
                 ChangeGameState(GameState.Win);
         }
+    }
+
+    public void SetFirstCharacter(PlayerCharacter playerData)
+    {
+        Player1data = playerData;
+    }
+
+    public void SetSecondCharacter(PlayerCharacter playerData)
+    {
+        Player2data = playerData;
     }
 
 }

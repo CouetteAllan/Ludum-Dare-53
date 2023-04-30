@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     private Animator animator;
     public Animator Animator { get { return animator; } }
 
+    [SerializeField] PlayerCharacter characterData;
     [SerializeField] private Transform attachPackagePointTransform;
     private bool hasPackage = false;
     private Package ownedPackage = null;
@@ -42,7 +43,15 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+    }
+
+    public void Init(PlayerCharacter datas)
+    {
+        characterData = datas;
+
+        this.animator.runtimeAnimatorController = characterData.animController;
         graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
+        graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
     }
 
     // Update is called once per frame
@@ -68,7 +77,7 @@ public class PlayerScript : MonoBehaviour
         isStun = true;
         yield return new WaitForSeconds(stunTime);
         isStun = false;
-        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
+        graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
     }
 
     public void PackageDropped(bool gotHit)
