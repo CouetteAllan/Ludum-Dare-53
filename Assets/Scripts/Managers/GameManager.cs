@@ -1,14 +1,16 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum GameState
 {
     MainMenu,
+    StartGame,
+    DebutGame,
     InGame,
     Pause,
-    Win,
-    StartGame
+    Win
     //...
 }
 
@@ -48,17 +50,22 @@ public class GameManager : Singleton<GameManager>
         CurrentState = newState;
         switch (CurrentState)
         {
+            case GameState.MainMenu:
+                ToMenu();
+                break;
             case GameState.StartGame:
                 StartGame();
                 break;
-            case GameState.MainMenu:
-                ToMenu();
+            case GameState.DebutGame:
+                DebutGame();
                 break;
             case GameState.InGame:
                 InGame();
                 break;
             case GameState.Pause:
                 Pause();
+                break;
+            case GameState.Win:
                 break;
         }
 
@@ -69,14 +76,23 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         //àchanger
-        SceneManager.LoadScene("sceneAllan");
-        GlobalTimer = 60;
-        ChangeGameState(GameState.InGame);
+        var loadScene = SceneManager.LoadSceneAsync("sceneAllan", LoadSceneMode.Single);
+        if (loadScene.isDone)
+        {
+            GlobalTimer = 60;
+            ChangeGameState(GameState.InGame);
+        }
+    }
+
+    public void DebutGame()
+    {
+
     }
 
     public void InGame()
     {
         //Resume legame
+
     }
 
     public void ToMenu()
