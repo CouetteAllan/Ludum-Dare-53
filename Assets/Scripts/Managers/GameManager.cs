@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
 
     public void InGame()
     {
-        
+        //Resume legame
     }
 
     public void ToMenu()
@@ -86,7 +86,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Pause()
     {
-        
+        //maybe stop time ?
     }
     #endregion
 

@@ -158,42 +158,46 @@ public class PlayerController : MonoBehaviour
 
         #endregion
         _moveInput = moveAction.ReadValue<Vector2>();
-        switch (state)
+        if (!player.IsStun)
         {
-            case State.Normal:
-                if (Mathf.Abs(_moveInput.x) >= 0.01)
-                {
-                    CheckDirectionToFace(_moveInput.x > 0);
-                    animator.SetBool("IsMoving", true);
-                }
-                else
-                    animator.SetBool("IsMoving", false);
-                CheckGrounded();
-                CheckJump();
-                if (CanDash())
-                {
-                    dashBufferCount = -1;
-                    state = State.Dash;
-                    nextDashTime = Time.time + dashCooldown;
-                    dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
-                    storedVelocity = this.rb.velocity;
-                    dashDuration = Data.dashTime;
-                    Dash();
-                }
-                animator.SetFloat("SpeedY", this.rb.velocity.y);
-                break;
-            case State.Dash:
-                break;
-            case State.Roll:
-                break;
+            switch (state)
+            {
+                case State.Normal:
+                    if (Mathf.Abs(_moveInput.x) >= 0.01)
+                    {
+                        CheckDirectionToFace(_moveInput.x > 0);
+                        animator.SetBool("IsMoving", true);
+                    }
+                    else
+                        animator.SetBool("IsMoving", false);
+                    CheckGrounded();
+                    CheckJump();
+                    if (CanDash())
+                    {
+                        dashBufferCount = -1;
+                        state = State.Dash;
+                        nextDashTime = Time.time + dashCooldown;
+                        dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
+                        storedVelocity = this.rb.velocity;
+                        dashDuration = Data.dashTime;
+                        Dash();
+                    }
+                    animator.SetFloat("SpeedY", this.rb.velocity.y);
+                    break;
+                case State.Dash:
+                    break;
+                case State.Roll:
+                    break;
+            }
         }
         SetUpGravity();
-
         animator.SetBool("IsGrounded", CanJumpFromGround());
     }
 
     private void FixedUpdate()
     {
+        if (player.IsStun)
+            return;
         switch (state)
         {
             case State.Dash:

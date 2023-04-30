@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
     //à mettre dans des paramètres système pour que ça soit modifiable dans les règles du jeu
     [SerializeField] private float stunTime = 0.2f;
     private bool isStun = false;
+    public bool IsStun { get { return isStun; } } 
 
     [Space(3.0f)]
     [SerializeField] private ParticleHandle VFX;
@@ -31,6 +32,9 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private BoxCollider2D hitBox;
     [SerializeField] private BoxCollider2D hurtBox;
 
+    private GameObject graphObject;
+
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -38,7 +42,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        
+        graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -59,9 +63,11 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator StunState()
     {
+        graphObject.GetComponent<SpriteRenderer>().color = Color.yellow;
         isStun = true;
         yield return new WaitForSeconds(stunTime);
         isStun = false;
+        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public void PackageDropped(bool gotHit)

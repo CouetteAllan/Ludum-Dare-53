@@ -36,8 +36,8 @@ MonoBehaviour:
   jumpHangMaxSpeedMult: 0
   coyoteTime: 0.1
   jumpInputBufferTime: 0.15
-  dashVelocity: 70
-  dashTime: 0.2
+  dashVelocity: 50
+  dashTime: 0.25
   dashBuffer: 0.1
   rollVelocity: 30
   rollTime: 0.3
