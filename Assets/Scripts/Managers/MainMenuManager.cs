@@ -42,11 +42,8 @@ public class MainMenuManager : MonoBehaviour
 
         BackButton1.onClick.AddListener(Back);
         masterVolume.onValueChanged.AddListener(setMasterVolume);
-        masterVolume.value = SoundManager.Instance.masterVolume;
         musicVolume.onValueChanged.AddListener(setMusicVolume);
-        musicVolume.value = SoundManager.Instance.musicVolume;
         sfxVolume.onValueChanged.AddListener(setSFXVolume);
-        sfxVolume.value = SoundManager.Instance.sfxVolume;
 
         BackButton2.onClick.AddListener(Back);
         LeftButtonP1.onClick.AddListener(LeftP1);
@@ -54,6 +51,13 @@ public class MainMenuManager : MonoBehaviour
         LeftButtonP2.onClick.AddListener(LeftP2);
         RightButtonP2.onClick.AddListener(RightP2);
         PlayButton.onClick.AddListener(StartGame);
+    }
+
+    private void Start()
+    {
+        masterVolume.value = SoundManager.Instance.masterVolume;
+        musicVolume.value = SoundManager.Instance.musicVolume;
+        sfxVolume.value = SoundManager.Instance.sfxVolume;
     }
 
     #region Start
