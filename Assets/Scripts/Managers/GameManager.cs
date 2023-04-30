@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -54,7 +55,7 @@ public class GameManager : Singleton<GameManager>
                 ToMenu();
                 break;
             case GameState.StartGame:
-                StartGame();
+                StartCoroutine(StartGame());
                 break;
             case GameState.DebutGame:
                 DebutGame();
@@ -73,15 +74,19 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region States
-    public void StartGame()
+    private IEnumerator StartGame()
     {
         //àchanger
-        var loadScene = SceneManager.LoadSceneAsync("sceneAllan", LoadSceneMode.Single);
-        if (loadScene.isDone)
+        Debug.Log("JE START LE GAME");
+        var loadScene = SceneManager.LoadSceneAsync("SceneAllan", LoadSceneMode.Single);
+        loadScene.allowSceneActivation = true;
+        while (!loadScene.isDone)
         {
-            GlobalTimer = 60;
-            ChangeGameState(GameState.InGame);
+            yield return null;
         }
+        ChangeGameState(GameState.InGame);
+        Debug.Log("JE START LE GAME episode 2");
+
     }
 
     public void DebutGame()
