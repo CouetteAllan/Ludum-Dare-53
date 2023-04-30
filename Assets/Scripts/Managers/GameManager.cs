@@ -57,9 +57,6 @@ public class GameManager : Singleton<GameManager>
             case GameState.StartGame:
                 StartCoroutine(StartGame());
                 break;
-            case GameState.DebutGame:
-                DebutGame();
-                break;
             case GameState.InGame:
                 InGame();
                 break;
@@ -77,22 +74,17 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator StartGame()
     {
         //àchanger
-        Debug.Log("JE START LE GAME");
         var loadScene = SceneManager.LoadSceneAsync("SceneAllan", LoadSceneMode.Single);
         loadScene.allowSceneActivation = true;
         while (!loadScene.isDone)
         {
             yield return null;
         }
+        GlobalTimer = 60.0f;
         ChangeGameState(GameState.InGame);
-        Debug.Log("JE START LE GAME episode 2");
 
     }
 
-    public void DebutGame()
-    {
-
-    }
 
     public void InGame()
     {

@@ -54,6 +54,7 @@ public class PlayerScript : MonoBehaviour
     private void OnHit()
     {
         //Instancier jouer l'FX de hit.
+        animator.SetTrigger("Hit");
         VFX.PlayEffect("Hit");
         //Stun
         StartCoroutine(StunState());

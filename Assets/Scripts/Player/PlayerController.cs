@@ -276,7 +276,6 @@ public class PlayerController : MonoBehaviour
             _isJumpCut = false;
             _isJumpFalling = false;
             StartCoroutine(Jump());
-            animator.SetTrigger("Jump");
         }
     }
     private IEnumerator Jump()
@@ -326,11 +325,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        state = State.Normal;
         animator.SetTrigger("EndDash");
-        rb.velocity /= 2.0f;
+        rb.velocity /= 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
+        yield return new WaitForSeconds(seconds: 0.3f);
+        state = State.Normal;
     }
     private void Roll()
     {
