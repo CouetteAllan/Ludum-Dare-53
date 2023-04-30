@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
     private Collider2D collisionBox;
 
     private Coroutine dashCoroutine;
+    private bool hasRecentlyDroppedPackage = false;
     #endregion
     [SerializeField] private ParticleHandle particles;
     private bool playRunParticle = false;
@@ -296,6 +297,7 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         Data.jumpInputBufferTime = 0.5f;
+        player.PackageDropped();
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashCoroutine());
