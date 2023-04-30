@@ -69,7 +69,7 @@ public class GameManager : Singleton<GameManager>
     public void StartGame()
     {
         //àchanger
-        SceneManager.LoadScene("sceneQuentin");
+        SceneManager.LoadScene("sceneAllan");
         GlobalTimer = 60;
         ChangeGameState(GameState.InGame);
     }

@@ -10,6 +10,8 @@ public class SoundManager : Singleton<SoundManager>
     public Sound[] soundsEffects;
     public Sound[] musics;
 
+    public float masterVolume = 0.5f, musicVolume = 0.5f, sfxVolume = 0.5f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -108,6 +110,37 @@ public class SoundManager : Singleton<SoundManager>
             return;
         }
         s.source.volume = volume;
+    }
+
+    public void ModifyAllVolume(float i)
+    {
+        masterVolume = i;
+        foreach (Sound s in soundsEffects)
+        {
+            s.source.volume = i+sfxVolume/2;
+        }
+        foreach (Sound s in musics)
+        {
+            s.source.volume = i+musicVolume/2;
+        }
+    }
+
+    public void ModifyMusicVolume(float i)
+    {
+        musicVolume = i;
+        foreach (Sound s in musics)
+        {
+            s.source.volume = i+masterVolume/2;
+        }
+    }
+
+    public void ModifySFXVolume(float i)
+    {
+        sfxVolume = i;
+        foreach (Sound s in soundsEffects)
+        {
+            s.source.volume = i+masterVolume/2;
+        }
     }
 
     public void ModifyPitch(string name, float pitch)

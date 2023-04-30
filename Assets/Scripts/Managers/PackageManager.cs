@@ -22,11 +22,4 @@ public class PackageManager : Singleton<PackageManager>
         SpawnPackage();
     }
 
-    /*private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            SpawnPackage();
-        }
-    }*/
 }

@@ -53,7 +53,6 @@ public class Building : MonoBehaviour
     void SetActive()
     {
         CurrentState = State.Active;
-        //this.gameObject.GetComponent<SpriteRenderer>().color = Color.green;
         RandomSpotActive();
     }
 

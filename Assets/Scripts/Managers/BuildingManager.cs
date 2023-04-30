@@ -22,11 +22,4 @@ public class BuildingManager : Singleton<BuildingManager>
         ActivateRandomBuilding();
     }
 
-    /*private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ActivateRandomBuilding();
-        }
-    }*/
 }
