@@ -34,7 +34,7 @@ public class PlayerScript : MonoBehaviour
 
     private GameObject graphObject;
 
-
+    private const float BASE_PACKAGE_GRAVITY = 3.0f;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -79,7 +79,7 @@ public class PlayerScript : MonoBehaviour
         //Drop le paquet (à ses pieds ?)
         ownedPackage.transform.SetParent(null);
         ownedPackage.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-        ownedPackage.Rigidbody2D.gravityScale = basePackageGravityScale;
+        ownedPackage.Rigidbody2D.gravityScale = BASE_PACKAGE_GRAVITY;
         HasRecentlyLostPackage = true;
         nextTimerPackagePickUp = Time.time + timerBeforePackagePickUp;
         hasPackage = false;
@@ -97,7 +97,6 @@ public class PlayerScript : MonoBehaviour
         package.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
 
         var packageRB = package.Rigidbody2D;
-        basePackageGravityScale = packageRB.gravityScale;
         packageRB.gravityScale = 0.0f;
     }
 
