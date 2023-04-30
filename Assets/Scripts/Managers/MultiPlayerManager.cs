@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class MultiPlayerManager : Singleton<MultiPlayerManager>
 {
     private List<PlayerScript> players = new List<PlayerScript>();
-    public List<PlayerScript> Players { get { return players; } };
+    public List<PlayerScript> Players { get { return players; } }
     private GameObject[] spawnPoints;
 
     [SerializeField] private PlayerScript playerPrefab;
