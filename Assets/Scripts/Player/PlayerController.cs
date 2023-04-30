@@ -297,7 +297,7 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         Data.jumpInputBufferTime = 0.5f;
-        player.PackageDropped();
+        player.PackageDropped(gotHit: false);
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashCoroutine());
@@ -317,6 +317,9 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = dashDir.normalized * Data.dashVelocity;
             yield return null;
+            /*if (LastOnGroundTime < 0)
+                break;*/
+
         }
 
         state = State.Normal;
@@ -428,7 +431,6 @@ public class PlayerController : MonoBehaviour
                         canDropDown = true;
                     }
                     LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
-                    Debug.Log(LastOnGroundTime);
                     hasDashed = false;
                 }
             }

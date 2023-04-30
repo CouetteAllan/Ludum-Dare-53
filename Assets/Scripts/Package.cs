@@ -27,11 +27,14 @@ public class Package : MonoBehaviour,IPickUpItem
 
         if(gotHit)
         {
+            Vector2 dir = new Vector2(Random.Range(-1.0f, 1.0f), 1);
+            float pushForce = 10f;
             //ajouter impulsion du paquet random ?
+            this.Rigidbody2D.AddForce(dir.normalized * pushForce,ForceMode2D.Impulse);
             //faire en sorte que le paquet n'appartienne plus à personne
-            ownedPlayer = null;
+            ownedPlayer.OnPackageDrop -= DropPackage;
+            return;
         }
-
         ownedPlayer.OnPackageDrop -= DropPackage;
     }
 

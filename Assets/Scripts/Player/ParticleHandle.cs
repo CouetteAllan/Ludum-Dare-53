@@ -23,7 +23,7 @@ public class ParticleHandle : MonoBehaviour
             throw;
         }
         
-        var go = Instantiate(particle.particlePrefab,particle.playPosition.position,Quaternion.identity);
+        var go = Instantiate(particle.particlePrefab,particle.playPosition.position,Quaternion.identity, particle.attachToParent? particle.playPosition : null);
         if (flip)
         {
             Vector3 scale = go.transform.localScale;
@@ -41,4 +41,5 @@ public struct FXStruct
     public string name;
     public GameObject particlePrefab;
     public Transform playPosition;
+    public bool attachToParent;
 }

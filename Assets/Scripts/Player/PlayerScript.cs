@@ -20,6 +20,16 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private float timerBeforePackagePickUp = 0.5f;
     private float nextTimerPackagePickUp = 0.0f;
 
+    //à mettre dans des paramètres système pour que ça soit modifiable dans les règles du jeu
+    [SerializeField] private float stunTime = 0.2f;
+    private bool isStun = false;
+
+    [Space(3.0f)]
+    [SerializeField] private ParticleHandle VFX;
+
+    [Space(3.0f)]
+    [SerializeField] private BoxCollider2D hitBox;
+    [SerializeField] private BoxCollider2D hurtBox;
 
     private void Awake()
     {
@@ -40,18 +50,21 @@ public class PlayerScript : MonoBehaviour
     private void OnHit()
     {
         //Instancier jouer l'FX de hit.
+        VFX.PlayEffect("Hit");
         //Stun
-
+        StartCoroutine(StunState());
         //Lacher le package si y a package
-        if(hasPackage)
-        {
-            hasPackage = false;
-            bool gothit = true;
-            OnPackageDrop?.Invoke(gothit);
-        }
+        PackageDropped(gotHit: true);
     }
 
-    public void PackageDropped()
+    IEnumerator StunState()
+    {
+        isStun = true;
+        yield return new WaitForSeconds(stunTime);
+        isStun = false;
+    }
+
+    public void PackageDropped(bool gotHit)
     {
         if (!hasPackage)
             return;
@@ -63,7 +76,6 @@ public class PlayerScript : MonoBehaviour
         HasRecentlyLostPackage = true;
         nextTimerPackagePickUp = Time.time + timerBeforePackagePickUp;
         hasPackage = false;
-        var gotHit = false;
         OnPackageDrop?.Invoke(gotHit);
     }
 
@@ -91,6 +103,12 @@ public class PlayerScript : MonoBehaviour
                 return;
             }
             item.PickUp(this);
+        }
+        
+        
+        if(collision.TryGetComponent<PlayerScript>(out PlayerScript playerScript) && hitBox.IsTouching(playerScript.hurtBox))
+        {
+            playerScript.OnHit();
         }
     }
 
