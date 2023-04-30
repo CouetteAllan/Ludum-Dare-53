@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMoveBackground
+public interface IPickUpItem
 {
-    public void Move(float speed);
-    public static bool CanMove { get; set; }
+    public void PickUp(PlayerScript player);
 }

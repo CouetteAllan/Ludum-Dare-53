@@ -270,16 +270,19 @@ public class PlayerController : MonoBehaviour
             IsJumping = true;
             _isJumpCut = false;
             _isJumpFalling = false;
-            Jump(FIRST_JUMP_MULTIPLIER);
+            StartCoroutine(Jump());
             animator.SetTrigger("Jump");
         }
     }
-    private void Jump(float multiply)
+    private IEnumerator Jump()
     {
         //Ensures we can't call Jump multiple times from one press
         LastPressedJumpTime = 0;
         LastOnGroundTime = 0;
 
+        yield return new WaitForSeconds(0.05f);
+
+        animator.SetTrigger("Jump");
         //We increase the force applied if we are falling
         //This means we'll always feel like we jump the same amount 
         //(setting the player's Y velocity to 0 beforehand will likely work the same, but I find this more elegant :D)
@@ -287,7 +290,7 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.y < 0)
             force -= rb.velocity.y;
 
-        rb.AddForce(Vector2.up * force * multiply, ForceMode2D.Impulse);
+        rb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
         //Instantier un feedback, particle effect
     }
     private void Dash()
@@ -352,26 +355,6 @@ public class PlayerController : MonoBehaviour
         graphObject.GetComponent<SpriteRenderer>().color = Color.white;
         rb.velocity /= 3.0f;
         state = State.Normal;
-    }
-    private void DropDown()
-    {
-        if (dropDownCoroutine != null)
-            StopCoroutine(dropDownCoroutine);
-        dropDownCoroutine = StartCoroutine(HandleCollisions());
-
-        float dropDownPos = 0.1f;
-        rb.transform.position = new Vector2(rb.transform.position.x, rb.transform.position.y - dropDownPos);
-    }
-    private Coroutine dropDownCoroutine;
-    IEnumerator HandleCollisions()
-    {
-        if(colliderRef != null)
-        {
-            float timeBeforeReEnableCollisions = 0.3f;
-
-            yield return new WaitForSeconds(timeBeforeReEnableCollisions);
-
-        }
     }
     private void SetGravityScale(float scale)
     {
@@ -472,7 +455,7 @@ public class PlayerController : MonoBehaviour
     private bool HasDashButStillInTheAir() => hasDashed && LastOnGroundTime <= 0.0f; 
     private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f && !HasDashButStillInTheAir();
     private bool CanRoll() => state == State.Normal && Time.time >= nextRollTime;
-    private bool CanDropDownFromPlatform() => state == State.Normal && canDropDown && _moveInput.y < 0.0f;
+    private bool CanDropDownFromPlatform() => state == State.Normal && canDropDown && _moveInput.normalized.y < -0.75f;
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()
