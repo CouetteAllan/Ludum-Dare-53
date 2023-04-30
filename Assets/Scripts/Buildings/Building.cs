@@ -24,7 +24,7 @@ public class Building : MonoBehaviour
         foreach(var v in Spots)
         {
             v.GetComponent<Spot>().parentBuilding = this;
-            v.SetActive(false);
+            //v.SetActive(false);
         }
     }
 
@@ -37,7 +37,7 @@ public class Building : MonoBehaviour
         {
             case State.Active:
 
-                SetActive();
+                SetSpotActive();
                 break;
             case State.ColoredP1:
                 
@@ -50,7 +50,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    void SetActive()
+    void SetSpotActive()
     {
         CurrentState = State.Active;
         RandomSpotActive();

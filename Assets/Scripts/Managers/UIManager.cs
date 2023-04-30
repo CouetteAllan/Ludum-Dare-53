@@ -7,13 +7,14 @@ using TMPro;
 
 public class UIManager : Singleton<UIManager>
 {
-
+    [Header("UI")]
+    [Space]
     public TMP_Text timer;
 
     public Button ResumeButton;
     public Button SettingsButton, MenuButton;
 
-    public GameObject PausePanel, SettingsPanel;
+    public GameObject PausePanel, SettingsPanel, UIPanel;
 
     [Header("Settings")]
     [Space]
@@ -21,13 +22,23 @@ public class UIManager : Singleton<UIManager>
     public Button backButton;
     public Slider masterVolume, musicVolume, sfxVolume;
 
+    [Header("End")]
+    [Space]
+
+    public GameObject EndPanel;
+    public TMP_Text ScoreP1, ScoreP2;
+    public Button MenuButton2;
+
+    [Header("Tuto")]
+    [Space]
+
+    public GameObject TutoPanel;
+
     protected override void Awake()
     {
         base.Awake();
-        GameManager.OnStateChanged += GameManager_OnStateChanged;
 
-        PausePanel.SetActive(false);
-        SettingsPanel.SetActive(false);
+        GameManager.OnStateChanged += GameManager_OnStateChanged;
 
         ResumeButton.onClick.AddListener(Resume);
         SettingsButton.onClick.AddListener(Settings);
@@ -41,16 +52,37 @@ public class UIManager : Singleton<UIManager>
         musicVolume.value = SoundManager.Instance.musicVolume;
         sfxVolume.onValueChanged.AddListener(setSFXVolume);
         sfxVolume.value = SoundManager.Instance.sfxVolume;
+
+        MenuButton2.onClick.AddListener(MainMenu);
+    }
+
+    private void Start()
+    {
+        UIPanel.SetActive(false);
+        PausePanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+        TutoPanel.SetActive(false);
+        EndPanel.SetActive(false);
     }
 
     private void GameManager_OnStateChanged(GameState newState)
     {
         switch (newState)
         {
+            case GameState.MainMenu:
+                DisplayUI(false);
+                break;
             case GameState.InGame:
+                DisplayUI(true);
                 break;
             case GameState.Pause:
                 DisplayPause(true);
+                break;
+            case GameState.Win:
+                Win();
+                break;
+            case GameState.StartGame:
+                DisplayUI(true);
                 break;
         }
     }
@@ -58,6 +90,11 @@ public class UIManager : Singleton<UIManager>
     private void DisplayPause(bool state)
     {
         PausePanel.SetActive(state);
+    }
+
+    private void DisplayUI(bool state)
+    {
+        UIPanel.SetActive(state);
     }
 
     public void Resume()
@@ -71,6 +108,9 @@ public class UIManager : Singleton<UIManager>
     public void MainMenu()
     {
         //Ouvrir la BootScene
+        UIPanel.SetActive(false);
+        EndPanel.SetActive(false);
+        PausePanel.SetActive(false);
         GameManager.Instance.ChangeGameState(GameState.MainMenu);
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
@@ -78,6 +118,10 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
         timer.text = ((int)GameManager.Instance.GlobalTimer).ToString();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameManager.Instance.ChangeGameState(GameState.Pause);
+        }
     }
 
     #region Settings
@@ -110,4 +154,11 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
+
+    public void Win()
+    {
+        EndPanel.SetActive(true);
+        ScoreP1.text = GameManager.Instance.ScoreP1.ToString();
+        ScoreP2.text = GameManager.Instance.ScoreP2.ToString();
+    }
 }

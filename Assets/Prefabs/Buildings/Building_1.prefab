@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spot
       objectReference: {fileID: 0}
+    - target: {fileID: 4189190621946608363, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4189190621946608375, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -190,6 +194,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spot (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4189190621946608363, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4189190621946608375, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -264,6 +272,10 @@ PrefabInstance:
     - target: {fileID: 4189190621946608363, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
       propertyPath: m_Name
       value: Spot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4189190621946608363, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4189190621946608375, guid: dba41b48049e1b2449e62d8ed9385ff7, type: 3}
       propertyPath: m_RootOrder
