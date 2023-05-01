@@ -87,6 +87,9 @@ public class Building : MonoBehaviour
        // newColor.a = 1;
         //graph.color = newColor;
         newColor.a = 0.35f;
+        var tmp = effect.GetComponent<SpriteRenderer>().color;
+        tmp.a = 0.35f;
+        effect.GetComponent<SpriteRenderer>().color = tmp;
         filter.color = newColor;
         foreach (var v in Spots)
         {
@@ -102,7 +105,8 @@ public class Building : MonoBehaviour
 
         CurrentState = State.ColoredP1;
         effect.SetActive(true);
-        effect.gameObject.GetComponent<Animator>().SetTrigger("Play");
+        effect.gameObject.GetComponent<Animator>().Play("New Animation",-1,0f);
+        //effect.gameObject.GetComponent<Animator>().SetTrigger("Play");
     }
 
     void SetColoredP2()
@@ -112,6 +116,9 @@ public class Building : MonoBehaviour
        // newColor.a = 1;
         //graph.color = newColor;
         newColor.a = 0.35f;
+        var tmp = effect.GetComponent<SpriteRenderer>().color;
+        tmp.a = 0.35f;
+        effect.GetComponent<SpriteRenderer>().color = tmp;
         filter.color = newColor;
         foreach (var v in Spots)
         {
@@ -127,6 +134,7 @@ public class Building : MonoBehaviour
 
         CurrentState = State.ColoredP2;
         effect.SetActive(true);
-        effect.gameObject.GetComponent<Animator>().GetComponent<Animator>().SetTrigger("Play");
+        effect.gameObject.GetComponent<Animator>().Play("New Animation", -1, 0f);
+        //effect.gameObject.GetComponent<Animator>().GetComponent<Animator>().SetTrigger("Play");
     }
 }
