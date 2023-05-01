@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -73,12 +74,15 @@ public class MainMenuManager : MonoBehaviour
         currentP1 = 0;
         currentColP1 = 0;
         currentColP2 = 1;
+
     }
 
     void Credits()
     {
         CreditsPanel.SetActive(true);
         StartPanel.SetActive(false);
+        EventSystem.current.firstSelectedGameObject = BackButton3.gameObject;
+        BackButton3.Select();
     }
 
     #region Start
@@ -87,12 +91,16 @@ public class MainMenuManager : MonoBehaviour
     {
         StartPanel.SetActive(false);
         CharacterSelectPanel.SetActive(true);
+        EventSystem.current.firstSelectedGameObject = PlayButton.gameObject;
+        PlayButton.Select();
     }
 
     private void Settings()
     {
         StartPanel.SetActive(false);
         SettingsPanel.SetActive(true);
+        EventSystem.current.firstSelectedGameObject = BackButton1.gameObject;
+        BackButton1.Select();
     }
 
     private void QuitGame()
@@ -110,6 +118,8 @@ public class MainMenuManager : MonoBehaviour
         SettingsPanel.SetActive(false);
         CharacterSelectPanel.SetActive(false);
         CreditsPanel.SetActive(false);
+        EventSystem.current.firstSelectedGameObject = StartButton.gameObject;
+        StartButton.Select();
     }
 
     private void setMasterVolume(float i)

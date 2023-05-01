@@ -6,6 +6,9 @@ public class Package : MonoBehaviour,IPickUpItem
 {
     private PlayerScript ownedPlayer;
     public PlayerScript CurrentOwnedPlayer { get { return ownedPlayer; } }
+    public GameObject triangle;
+    public float speed = 0.05f, timer = 1f;
+    private float privTimer;
 
     [SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
     public void PickUp(PlayerScript player)
@@ -37,6 +40,23 @@ public class Package : MonoBehaviour,IPickUpItem
             return;
         }
         ownedPlayer.OnPackageDrop -= DropPackage;
+    }
+
+    private void Start()
+    {
+        privTimer = timer;
+    }
+
+    private void Update()
+    {
+        privTimer -= Time.deltaTime;
+
+        triangle.transform.position  += Vector3.up * speed * Time.deltaTime;
+        if(privTimer <= 0)
+        {
+            speed *= -1;
+            privTimer = timer;
+        }
     }
 
 }
