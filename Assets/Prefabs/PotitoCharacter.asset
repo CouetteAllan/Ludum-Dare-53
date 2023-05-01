@@ -15,4 +15,4 @@ MonoBehaviour:
   spriteColor: {r: 1, g: 0.3537736, b: 0.3664291, a: 1}
   animController: {fileID: 9100000, guid: 8a06be582af4a7448b7d2bcc98708340, type: 2}
   characterType: 0
-  art: {fileID: -1186309, guid: e9e647f741ca0f946905aaabe25759a1, type: 3}
+  art: {fileID: -1973776858, guid: 5744e9606fc689840904de6151a64012, type: 3}
