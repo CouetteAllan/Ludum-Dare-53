@@ -82,6 +82,15 @@ namespace Rayqdr.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""0012bcbb-37e3-432a-957b-910650d6e5c7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -368,6 +377,28 @@ namespace Rayqdr.Inputs
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de9fa980-e6e7-4858-8226-f992f9830175"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""338ba2ce-036e-49b2-9bb6-6a47d88ae183"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -961,6 +992,7 @@ namespace Rayqdr.Inputs
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
+            m_Player_PauseMenu = m_Player.FindAction("PauseMenu", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1040,6 +1072,7 @@ namespace Rayqdr.Inputs
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Dash;
         private readonly InputAction m_Player_Roll;
+        private readonly InputAction m_Player_PauseMenu;
         public struct PlayerActions
         {
             private @PlayerInputActionScript m_Wrapper;
@@ -1050,6 +1083,7 @@ namespace Rayqdr.Inputs
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
             public InputAction @Roll => m_Wrapper.m_Player_Roll;
+            public InputAction @PauseMenu => m_Wrapper.m_Player_PauseMenu;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1077,6 +1111,9 @@ namespace Rayqdr.Inputs
                 @Roll.started += instance.OnRoll;
                 @Roll.performed += instance.OnRoll;
                 @Roll.canceled += instance.OnRoll;
+                @PauseMenu.started += instance.OnPauseMenu;
+                @PauseMenu.performed += instance.OnPauseMenu;
+                @PauseMenu.canceled += instance.OnPauseMenu;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1099,6 +1136,9 @@ namespace Rayqdr.Inputs
                 @Roll.started -= instance.OnRoll;
                 @Roll.performed -= instance.OnRoll;
                 @Roll.canceled -= instance.OnRoll;
+                @PauseMenu.started -= instance.OnPauseMenu;
+                @PauseMenu.performed -= instance.OnPauseMenu;
+                @PauseMenu.canceled -= instance.OnPauseMenu;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1287,6 +1327,7 @@ namespace Rayqdr.Inputs
             void OnJump(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
             void OnRoll(InputAction.CallbackContext context);
+            void OnPauseMenu(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
