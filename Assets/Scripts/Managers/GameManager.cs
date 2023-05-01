@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -87,6 +87,8 @@ public class GameManager : Singleton<GameManager>
             yield return null;
         }
         GlobalTimer = 60.0f;
+        ScoreP1 = 0f;
+        ScoreP2 = 0f;
         ChangeGameState(GameState.DebutGame);
     }
 
