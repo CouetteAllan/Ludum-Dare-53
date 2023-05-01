@@ -122,6 +122,11 @@ public class PlayerScript : MonoBehaviour
         SoundManager.Instance.Play(soundName);
     }
 
+    public void PlayParticle(string particleName)
+    {
+        VFX.PlayEffect(particleName);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent<IPickUpItem>(out IPickUpItem item))

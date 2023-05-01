@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
                         dashBufferCount = -1;
                         state = State.Dash;
                         nextDashTime = Time.time + dashCooldown;
-                        dashDir = Mathf.Abs(_moveInput.x) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
+                        dashDir = Mathf.Abs(_moveInput.x) >= 0.01 || Mathf.Abs(_moveInput.y) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
                         storedVelocity = this.rb.velocity;
                         dashDuration = Data.dashTime;
                         Dash();
@@ -326,7 +326,7 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetTrigger("EndDash");
-        rb.velocity /= 10.0f;
+        rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 5.0f : rb.velocity / 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
         yield return new WaitForSeconds(seconds: 0.3f);
