@@ -106,6 +106,7 @@ public class GameManager : Singleton<GameManager>
     {
         //maybe stop time ?
         Time.timeScale = 0.0f;
+
     }
     #endregion
 

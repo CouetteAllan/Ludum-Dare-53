@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2fc005cb79d204fb63ce64b2f56d1b, type: 3}
   m_Name: PlayerMovementData
   m_EditorClassIdentifier: 
-  gravityStrength: -88.88889
-  gravityScale: 4.4444447
+  gravityStrength: -72
+  gravityScale: 3.6
   fallGravityMult: 2
   maxFallSpeed: 25
-  fastFallGravityMult: 1.2
-  maxFastFallSpeed: 40
+  fastFallGravityMult: 2
+  maxFastFallSpeed: 60
   runMaxSpeed: 15
   runAcceleration: 13
   runAccelAmount: 43.333332
@@ -27,10 +27,10 @@ MonoBehaviour:
   deccelInAir: 0.04
   doConserveMomentum: 1
   jumpHeight: 9
-  jumpTimeToApex: 0.45
-  jumpForce: 40
+  jumpTimeToApex: 0.5
+  jumpForce: 36
   jumpCutGravityMult: 3
-  jumpHangGravityMult: 0.963
+  jumpHangGravityMult: 0.914
   jumpHangTimeThreshold: 0.15
   jumpHangAccelerationMult: 1
   jumpHangMaxSpeedMult: 1
@@ -43,17 +43,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 1.6029233
-      inSlope: -15.429563
-      outSlope: -15.429563
+      time: -0.001864817
+      value: 1.0013666
+      inSlope: -0.24223767
+      outSlope: -0.24223767
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.22134991
+      outWeight: 1
     - serializedVersion: 3
-      time: 0.05348496
-      value: 1.2147851
+      time: 0.23073706
+      value: 1.3066441
       inSlope: -2.385426
       outSlope: -2.385426
       tangentMode: 0
@@ -61,8 +61,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.2584638
     - serializedVersion: 3
-      time: 0.2291213
-      value: 0.9984416
+      time: 0.37464368
+      value: 1.0058991
       inSlope: -0.36913022
       outSlope: -0.36913022
       tangentMode: 0
@@ -70,8 +70,8 @@ MonoBehaviour:
       inWeight: 0.82038355
       outWeight: 0.11483597
     - serializedVersion: 3
-      time: 0.5323906
-      value: 0.6415549
+      time: 0.69470406
+      value: 0.60426843
       inSlope: -0.7784784
       outSlope: -0.7784784
       tangentMode: 0
