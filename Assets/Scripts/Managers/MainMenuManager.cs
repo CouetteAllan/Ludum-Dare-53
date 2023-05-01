@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -35,6 +37,13 @@ public class MainMenuManager : MonoBehaviour
     public Button LeftButtonP1, RightButtonP1, LeftColorButtonP1, RightColorButtonP1;
     public Button LeftButtonP2, RightButtonP2, LeftColorButtonP2, RightColorButtonP2;
 
+    private InputAction leftSelectP1;
+    private InputAction rightSelectP1;
+    private InputAction leftSelectP2;
+    private InputAction rightSelectP2;
+
+    public InputSystemUIInputModule input;
+
     private void Awake()
     {
         StartPanel.SetActive(true);
@@ -63,6 +72,8 @@ public class MainMenuManager : MonoBehaviour
         LeftButtonP2.onClick.AddListener(LeftP2);
         RightButtonP2.onClick.AddListener(RightP2);
         PlayButton.onClick.AddListener(StartGame);
+
+
     }
 
     private void Start()
@@ -237,6 +248,14 @@ public class MainMenuManager : MonoBehaviour
             currentColP2++;
         colorP2.GetComponent<Image>().color = SetColor(chromaList[currentColP2]);
         PlayButton.interactable = IsPlayButtonEnabled();
+    }
+
+    private void ConfirmCharacter()
+    {
+        //Ne plus pouvoir changer de personnages
+        //play feedback 
+        //griser le personnage ?
+        //Passer à la selection de couleur
     }
 
 

@@ -497,6 +497,24 @@ namespace Rayqdr.Inputs
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""188dc198-aab3-439d-b21c-c34f869c1f65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""de14f87a-b17a-4f4f-9fd5-df841ccc11ae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -917,6 +935,28 @@ namespace Rayqdr.Inputs
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6b2cc10c-7081-4dec-b17b-0107e8541fa0"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LeftCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87307375-c10f-4e89-a4c9-c20ff212a7e7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RightCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1005,6 +1045,8 @@ namespace Rayqdr.Inputs
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+            m_UI_LeftCharacter = m_UI.FindAction("LeftCharacter", throwIfNotFound: true);
+            m_UI_RightCharacter = m_UI.FindAction("RightCharacter", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -1170,6 +1212,8 @@ namespace Rayqdr.Inputs
         private readonly InputAction m_UI_RightClick;
         private readonly InputAction m_UI_TrackedDevicePosition;
         private readonly InputAction m_UI_TrackedDeviceOrientation;
+        private readonly InputAction m_UI_LeftCharacter;
+        private readonly InputAction m_UI_RightCharacter;
         public struct UIActions
         {
             private @PlayerInputActionScript m_Wrapper;
@@ -1184,6 +1228,8 @@ namespace Rayqdr.Inputs
             public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
             public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
             public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+            public InputAction @LeftCharacter => m_Wrapper.m_UI_LeftCharacter;
+            public InputAction @RightCharacter => m_Wrapper.m_UI_RightCharacter;
             public InputActionMap Get() { return m_Wrapper.m_UI; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1223,6 +1269,12 @@ namespace Rayqdr.Inputs
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+                @LeftCharacter.started += instance.OnLeftCharacter;
+                @LeftCharacter.performed += instance.OnLeftCharacter;
+                @LeftCharacter.canceled += instance.OnLeftCharacter;
+                @RightCharacter.started += instance.OnRightCharacter;
+                @RightCharacter.performed += instance.OnRightCharacter;
+                @RightCharacter.canceled += instance.OnRightCharacter;
             }
 
             private void UnregisterCallbacks(IUIActions instance)
@@ -1257,6 +1309,12 @@ namespace Rayqdr.Inputs
                 @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+                @LeftCharacter.started -= instance.OnLeftCharacter;
+                @LeftCharacter.performed -= instance.OnLeftCharacter;
+                @LeftCharacter.canceled -= instance.OnLeftCharacter;
+                @RightCharacter.started -= instance.OnRightCharacter;
+                @RightCharacter.performed -= instance.OnRightCharacter;
+                @RightCharacter.canceled -= instance.OnRightCharacter;
             }
 
             public void RemoveCallbacks(IUIActions instance)
@@ -1341,6 +1399,8 @@ namespace Rayqdr.Inputs
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+            void OnLeftCharacter(InputAction.CallbackContext context);
+            void OnRightCharacter(InputAction.CallbackContext context);
         }
     }
 }

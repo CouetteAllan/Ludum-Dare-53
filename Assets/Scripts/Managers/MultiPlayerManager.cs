@@ -46,6 +46,7 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
     {
         Debug.Log("oui le spawn");
         PlayerInputManager.instance.playerPrefab = this.playerPrefab.gameObject;
+        
         for (int i = 0; i < PlayerInputManager.instance.maxPlayerCount; i++)
         {
             var playerInput = PlayerInputManager.instance.JoinPlayer(i);
@@ -60,6 +61,11 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
             players.Add(playerRef);
         }
         //GameManager.Instance.ChangeGameState(GameState.InGame);
+    }
+
+    private void CheckDevice()
+    {
+
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)

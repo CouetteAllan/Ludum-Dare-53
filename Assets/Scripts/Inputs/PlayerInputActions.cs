@@ -371,6 +371,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightSelectCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""a629e6b4-8e17-4528-aba6-e8a4adb3dbc9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftSelectCharacter"",
+                    ""type"": ""Button"",
+                    ""id"": ""a48ba59d-3133-4f61-90ff-4b3875eb0f93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -791,6 +809,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TrackedDeviceOrientation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54b83441-41b4-4022-a5ce-b1f260375866"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RightSelectCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a6bf82c-fb74-40a7-b0ad-079acb21cb3b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LeftSelectCharacter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -875,6 +915,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        m_UI_RightSelectCharacter = m_UI.FindAction("RightSelectCharacter", throwIfNotFound: true);
+        m_UI_LeftSelectCharacter = m_UI.FindAction("LeftSelectCharacter", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1008,6 +1050,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
+    private readonly InputAction m_UI_RightSelectCharacter;
+    private readonly InputAction m_UI_LeftSelectCharacter;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1022,6 +1066,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
+        public InputAction @RightSelectCharacter => m_Wrapper.m_UI_RightSelectCharacter;
+        public InputAction @LeftSelectCharacter => m_Wrapper.m_UI_LeftSelectCharacter;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1061,6 +1107,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
+            @RightSelectCharacter.started += instance.OnRightSelectCharacter;
+            @RightSelectCharacter.performed += instance.OnRightSelectCharacter;
+            @RightSelectCharacter.canceled += instance.OnRightSelectCharacter;
+            @LeftSelectCharacter.started += instance.OnLeftSelectCharacter;
+            @LeftSelectCharacter.performed += instance.OnLeftSelectCharacter;
+            @LeftSelectCharacter.canceled += instance.OnLeftSelectCharacter;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1095,6 +1147,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
+            @RightSelectCharacter.started -= instance.OnRightSelectCharacter;
+            @RightSelectCharacter.performed -= instance.OnRightSelectCharacter;
+            @RightSelectCharacter.canceled -= instance.OnRightSelectCharacter;
+            @LeftSelectCharacter.started -= instance.OnLeftSelectCharacter;
+            @LeftSelectCharacter.performed -= instance.OnLeftSelectCharacter;
+            @LeftSelectCharacter.canceled -= instance.OnLeftSelectCharacter;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1175,5 +1233,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        void OnRightSelectCharacter(InputAction.CallbackContext context);
+        void OnLeftSelectCharacter(InputAction.CallbackContext context);
     }
 }
