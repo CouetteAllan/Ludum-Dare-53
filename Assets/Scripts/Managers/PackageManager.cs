@@ -10,10 +10,11 @@ public class PackageManager : Singleton<PackageManager>
 
     GameObject currentPackage;
 
+    [SerializeField] float timerDelaySpawnPackage;
+
     public void SpawnPackage()
     {
-        if (currentPackage)
-            Destroy(currentPackage);
+        if(!currentPackage)
         currentPackage = Instantiate(packagePrefab,spawns[0].transform);
     }
 

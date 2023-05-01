@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Spot : MonoBehaviour
 {
-    [System.NonSerialized]
+    [HideInInspector]
     public Building parentBuilding;
 }

@@ -33,17 +33,10 @@ public class Package : MonoBehaviour,IPickUpItem
             this.Rigidbody2D.AddForce(dir.normalized * pushForce,ForceMode2D.Impulse);
             //faire en sorte que le paquet n'appartienne plus à personne
             ownedPlayer.OnPackageDrop -= DropPackage;
+            ownedPlayer = null;
             return;
         }
         ownedPlayer.OnPackageDrop -= DropPackage;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Spot spot = collision.gameObject.GetComponent<Spot>();
-        if(spot != null)
-        {
-            spot.parentBuilding.ChangeState(State.ColoredP1);
-        }
-    }
 }

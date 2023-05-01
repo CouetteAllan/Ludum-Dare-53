@@ -56,7 +56,6 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
                 playerRef.Init(GameManager.Instance.Player1data);
             else if (i == 1)
             {
-                Debug.Log(GameManager.Instance.Player2data + "Player 2 init ?");
                 playerRef.Init(GameManager.Instance.Player2data);
             }
         }

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acb1aec4bd1c924a88bd39f2da55ebf, type: 3}
   m_Name: PotitoCharacter
   m_EditorClassIdentifier: 
-  spriteColor: {r: 1, g: 0.3537736, b: 0.3664291, a: 0}
+  spriteColor: {r: 1, g: 0.3537736, b: 0.3664291, a: 1}
   animController: {fileID: 9100000, guid: 8a06be582af4a7448b7d2bcc98708340, type: 2}
+  characterType: 0
+  art: {fileID: -1186309, guid: e9e647f741ca0f946905aaabe25759a1, type: 3}

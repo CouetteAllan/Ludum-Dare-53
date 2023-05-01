@@ -8,4 +8,9 @@ public class FXAutoDestroy : MonoBehaviour
     {
         Destroy(this.gameObject);
     }
+
+    public void PlaySoundFX(string soundName)
+    {
+        SoundManager.Instance.Play(soundName);
+    }
 }

@@ -336,7 +336,6 @@ public class PlayerController : MonoBehaviour
     {
         //Passer en state Roll
         state = State.Roll;
-        graphObject.GetComponent<SpriteRenderer>().color = Color.green;
         StartCoroutine(RollCoroutine());
     }
     private IEnumerator RollCoroutine()
@@ -361,7 +360,6 @@ public class PlayerController : MonoBehaviour
 
         nextRollTime = Time.time + rollCooldown;
         Physics2D.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer, false);
-        graphObject.GetComponent<SpriteRenderer>().color = Color.white;
         rb.velocity /= 3.0f;
         state = State.Normal;
     }

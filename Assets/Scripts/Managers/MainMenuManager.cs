@@ -57,6 +57,8 @@ public class MainMenuManager : MonoBehaviour
         masterVolume.value = SoundManager.Instance.masterVolume;
         musicVolume.value = SoundManager.Instance.musicVolume;
         sfxVolume.value = SoundManager.Instance.sfxVolume;
+        currentP2 = 1;
+        currentP1 = 0;
     }
 
     #region Start

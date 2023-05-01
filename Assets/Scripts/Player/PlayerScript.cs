@@ -2,17 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
+    /// <summary>
+    /// Fire when any player scores a point and take in parameter and int for the player index (0 or 1)
+    /// </summary>
+    public static event Action<int> OnPlayerScore;
+
     private Animator animator;
     public Animator Animator { get { return animator; } }
 
-    [SerializeField] PlayerCharacter characterData;
+    [SerializeField] private PlayerCharacter characterData;
+    public int PlayerIndex { get; private set; } = -1;
+    
+    public PlayerCharacter CharacterData { get { return characterData; } }
     [SerializeField] private Transform attachPackagePointTransform;
     private bool hasPackage = false;
     private Package ownedPackage = null;
-    private float basePackageGravityScale;
     public event Action<bool> OnPackageDrop;
     public event Action OnPackagePickUp;
     public bool HasRecentlyLostPackage { get; set; }
@@ -41,10 +49,6 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void Start()
-    {
-    }
-
     public void Init(PlayerCharacter datas)
     {
         characterData = datas;
@@ -52,6 +56,7 @@ public class PlayerScript : MonoBehaviour
         this.animator.runtimeAnimatorController = characterData.animController;
         graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
+        PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;
     }
 
     // Update is called once per frame
@@ -68,7 +73,10 @@ public class PlayerScript : MonoBehaviour
         //Stun
         StartCoroutine(StunState());
         //Lacher le package si y a package
+        hasPackage = false; 
         PackageDropped(gotHit: true);
+        SoundManager.Instance.Play("Hit");
+        Debug.Log("hit");
     }
 
     IEnumerator StunState()
@@ -82,7 +90,7 @@ public class PlayerScript : MonoBehaviour
 
     public void PackageDropped(bool gotHit)
     {
-        if (!hasPackage)
+        if (!hasPackage || ownedPackage == null)
             return;
 
         //Drop le paquet (à ses pieds ?)
@@ -109,6 +117,11 @@ public class PlayerScript : MonoBehaviour
         packageRB.gravityScale = 0.0f;
     }
 
+    public void PlaySound(string soundName)
+    {
+        SoundManager.Instance.Play(soundName);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent<IPickUpItem>(out IPickUpItem item))
@@ -124,6 +137,14 @@ public class PlayerScript : MonoBehaviour
         if(collision.TryGetComponent<PlayerScript>(out PlayerScript playerScript) && hitBox.IsTouching(playerScript.hurtBox))
         {
             playerScript.OnHit();
+        }
+
+        if(collision.TryGetComponent<Spot>(out Spot spot))
+        {
+            if (!hasPackage)
+                return;
+            spot.parentBuilding.ScorePlayer(this);
+            OnPlayerScore?.Invoke(PlayerIndex);
         }
     }
 

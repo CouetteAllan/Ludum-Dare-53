@@ -19,6 +19,8 @@ public class Building : MonoBehaviour
     [SerializeField]
     List<GameObject> Spots;
 
+    private PlayerScript ownedPlayer;
+
     private void Start()
     {
         foreach(var v in Spots)
@@ -26,6 +28,15 @@ public class Building : MonoBehaviour
             v.GetComponent<Spot>().parentBuilding = this;
             //v.SetActive(false);
         }
+    }
+
+    public void ScorePlayer(PlayerScript player)
+    {
+        ownedPlayer = player;
+        if (ownedPlayer.PlayerIndex == 0) //Player 1
+            ChangeState(State.ColoredP1);
+        else if (ownedPlayer.PlayerIndex == 1) ChangeState(State.ColoredP2); //Player 2
+        else Debug.Log("Invalid Player index");
     }
 
     public void ChangeState(State newState)
@@ -36,15 +47,14 @@ public class Building : MonoBehaviour
         switch (newState)
         {
             case State.Active:
-
                 SetSpotActive();
                 break;
+
             case State.ColoredP1:
-                
                 SetColoredP1();
                 break;
+
             case State.ColoredP2:
-                
                 SetColoredP2();
                 break;
         }
@@ -66,7 +76,7 @@ public class Building : MonoBehaviour
     void SetColoredP1()
     {
         //mettre couleur p1p2
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+        this.gameObject.GetComponent<SpriteRenderer>().color = ownedPlayer.CharacterData.spriteColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);
@@ -83,7 +93,7 @@ public class Building : MonoBehaviour
     void SetColoredP2()
     {
         //mettre couleur p1p2
-        this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        this.gameObject.GetComponent<SpriteRenderer>().color = ownedPlayer.CharacterData.spriteColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);

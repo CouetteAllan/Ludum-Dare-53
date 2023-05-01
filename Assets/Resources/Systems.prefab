@@ -44,7 +44,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a98ecb41e66aacf4785e0288da41171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsEffects: []
+  soundsEffects:
+  - name: Score
+    clip: {fileID: 8300000, guid: ff04681f60bc735408842213552a54bd, type: 3}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.606
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Hit
+    clip: {fileID: 0}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.69
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 0}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.671
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Run
+    clip: {fileID: 0}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.665
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 0}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.71
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Woosh
+    clip: {fileID: 0}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.71
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
   musics:
   - name: BGM
     clip: {fileID: 8300000, guid: dc76bdc2225d12f4583d5a1c488a5449, type: 3}

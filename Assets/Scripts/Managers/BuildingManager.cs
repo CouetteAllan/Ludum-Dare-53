@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
     [SerializeField]
     List<Building> buildings;
+
+    
 
     public void ActivateRandomBuilding()
     {
@@ -16,6 +19,7 @@ public class BuildingManager : Singleton<BuildingManager>
         } while (buildings[rand].CurrentState == State.Active);
         buildings[rand].ChangeState(State.Active);
     }
+
 
     private void Start()
     {
