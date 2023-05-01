@@ -44,6 +44,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject graphObject;
 
     private const float BASE_PACKAGE_GRAVITY = 3.0f;
+
+    private CameraShake camRef;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -59,10 +61,9 @@ public class PlayerScript : MonoBehaviour
         PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        camRef = Helpers.Camera.GetComponent<CameraShake>();
     }
 
     private void OnHit()
@@ -75,6 +76,7 @@ public class PlayerScript : MonoBehaviour
         //Lacher le package si y a package
         PackageDropped(gotHit: true);
         SoundManager.Instance.Play("Hit");
+        camRef.ShakeCamera(0.8f);
     }
 
     IEnumerator StunState()
