@@ -14,10 +14,10 @@ public class PlayerScript : MonoBehaviour
     private Animator animator;
     public Animator Animator { get { return animator; } }
 
-    [SerializeField] private PlayerCharacter characterData;
+    [SerializeField] private SelectedCharacterData characterData;
     public int PlayerIndex { get; private set; } = -1;
     
-    public PlayerCharacter CharacterData { get { return characterData; } }
+    public SelectedCharacterData CharacterData { get { return characterData; } }
     [SerializeField] private Transform attachPackagePointTransform;
     private bool hasPackage = false;
     private Package ownedPackage = null;
@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void Init(PlayerCharacter datas)
+    public void Init(SelectedCharacterData datas)
     {
         characterData = datas;
 

@@ -124,10 +124,21 @@ public class MainMenuManager : MonoBehaviour
         var gameManager = GameManager.Instance;
         //Set up les characters data séléctionnés
 
-        characterDataList[currentP1].spriteColor = SetColor(chromaList[currentColP1]);
-        characterDataList[currentP2].spriteColor = SetColor(chromaList[currentColP2]);
-        gameManager.SetFirstCharacter(characterDataList[currentP1]);
-        gameManager.SetSecondCharacter(characterDataList[currentP2]);
+        var p1Datas = new SelectedCharacterData
+        {
+            animController = characterDataList[currentP1].animController,
+            characterType = characterDataList[currentP1].characterType,
+            spriteColor = SetColor(chromaList[currentColP1]),
+        };
+        gameManager.SetFirstCharacter(p1Datas);
+
+        var p2Datas = new SelectedCharacterData
+        {
+            animController = characterDataList[currentP2].animController,
+            characterType = characterDataList[currentP2].characterType,
+            spriteColor = SetColor(chromaList[currentColP2]),
+        };
+        gameManager.SetSecondCharacter(p2Datas);
         gameManager.ChangeGameState(GameState.StartGame);
     }
 
@@ -156,6 +167,7 @@ public class MainMenuManager : MonoBehaviour
         else
             currentColP1--;
         colorP1.GetComponent<Image>().color = SetColor(chromaList[currentColP1]);
+        PlayButton.interactable = IsPlayButtonEnabled();
     }
 
     private void RightColorP1()
@@ -165,6 +177,7 @@ public class MainMenuManager : MonoBehaviour
         else
             currentColP1++;
         colorP1.GetComponent<Image>().color = SetColor(chromaList[currentColP1]);
+        PlayButton.interactable = IsPlayButtonEnabled();
     }
 
     private void LeftP2()
@@ -192,6 +205,7 @@ public class MainMenuManager : MonoBehaviour
         else
             currentColP2--;
         colorP2.GetComponent<Image>().color = SetColor(chromaList[currentColP2]);
+        PlayButton.interactable = IsPlayButtonEnabled();
     }
     private void RightColorP2()
     {
@@ -200,6 +214,7 @@ public class MainMenuManager : MonoBehaviour
         else
             currentColP2++;
         colorP2.GetComponent<Image>().color = SetColor(chromaList[currentColP2]);
+        PlayButton.interactable = IsPlayButtonEnabled();
     }
 
 
@@ -212,6 +227,8 @@ public class MainMenuManager : MonoBehaviour
         Chroma.Pink => new Color(240 / COLOR_RATIO, 62 / COLOR_RATIO, 255 / COLOR_RATIO, 1),
         Chroma.Green => new Color(78 / COLOR_RATIO, 250 / COLOR_RATIO, 115 / COLOR_RATIO, 1),
     };
+
+    private bool IsPlayButtonEnabled() => currentColP1 != currentColP2;
 
     #endregion
 }

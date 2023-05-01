@@ -10,7 +10,13 @@ public class PlayerCharacter : ScriptableObject
     public AnimatorController animController;
     public CharacterType characterType;
     public Sprite art;
-    public Chroma chroma;
+}
+
+public struct SelectedCharacterData
+{
+    public Color spriteColor;
+    public AnimatorController animController;
+    public CharacterType characterType;
 }
 
 public enum CharacterType

@@ -34,10 +34,10 @@ public class GameManager : Singleton<GameManager>
 
     public float GlobalTimer { get; private set; }
 
-    public PlayerCharacter Player1data { get; private set; }
+    public SelectedCharacterData Player1data { get; private set; }
     public float ScoreP1 { get; set; }
 
-    public  PlayerCharacter Player2data { get; private set; }
+    public  SelectedCharacterData Player2data { get; private set; }
     public float ScoreP2 { get; set; }
 
     #endregion
@@ -118,12 +118,12 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public void SetFirstCharacter(PlayerCharacter playerData)
+    public void SetFirstCharacter(SelectedCharacterData playerData)
     {
         Player1data = playerData;
     }
 
-    public void SetSecondCharacter(PlayerCharacter playerData)
+    public void SetSecondCharacter(SelectedCharacterData playerData)
     {
         Player2data = playerData;
     }
