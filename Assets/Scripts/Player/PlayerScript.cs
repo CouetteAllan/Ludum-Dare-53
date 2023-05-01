@@ -60,7 +60,7 @@ public class PlayerScript : MonoBehaviour
     {
         characterData = datas;
 
-        this.animator.runtimeAnimatorController = characterData.animController;
+        //this.animator.runtimeAnimatorController = characterData.animController;
         graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
         PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;

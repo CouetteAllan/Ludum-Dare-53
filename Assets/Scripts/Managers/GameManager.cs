@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -80,7 +80,7 @@ public class GameManager : Singleton<GameManager>
     private IEnumerator StartGame()
     {
         //àchanger
-        var loadScene = SceneManager.LoadSceneAsync("SceneAllan", LoadSceneMode.Single);
+        var loadScene = SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single);
         loadScene.allowSceneActivation = true;
         while (!loadScene.isDone)
         {
