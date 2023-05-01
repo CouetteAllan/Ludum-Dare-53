@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class GlobalSoundPlay : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
-        
+        PlayerScript.OnPlayerScore += PlayerScript_OnPlayerScore;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void PlayerScript_OnPlayerScore(int playerIndex)
     {
-        
+        SoundManager.Instance.Play("Score");
+    }
+
+    private void OnDisable()
+    {
+        PlayerScript.OnPlayerScore -= PlayerScript_OnPlayerScore;
     }
 }

@@ -229,7 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterData: {fileID: 0}
   attachPackagePointTransform: {fileID: 920201407058614278}
-  timerBeforePackagePickUp: 0.5
+  timerBeforePackagePickUp: 1
   stunTime: 0.2
   VFX: {fileID: 713384568}
   hitBox: {fileID: 4466008877179808860}

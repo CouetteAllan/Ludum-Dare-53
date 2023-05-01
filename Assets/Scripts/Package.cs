@@ -12,12 +12,12 @@ public class Package : MonoBehaviour,IPickUpItem
     {
         this.Rigidbody2D = GetComponent<Rigidbody2D>();
         ownedPlayer = player;
+        this.gameObject.GetComponent<Collider2D>().enabled = false;
         player.AttachPackage(this);
         player.OnPackageDrop += DropPackage;
         //Play sound
         //Play feedback visuels
         //Disable toutes les collisions.
-        this.gameObject.GetComponent<Collider2D>().enabled = false;
     }
 
     public void DropPackage(bool gotHit)

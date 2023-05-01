@@ -90,7 +90,7 @@ public class PlayerScript : MonoBehaviour
 
     public void PackageDropped(bool gotHit)
     {
-        if (!hasPackage || ownedPackage == null)
+        if (!hasPackage)
             return;
 
         //Drop le paquet (à ses pieds ?)
@@ -109,9 +109,10 @@ public class PlayerScript : MonoBehaviour
         ownedPackage = package;
         hasPackage = true;
 
+        package.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
         package.Rigidbody2D.transform.SetParent(attachPackagePointTransform, true);
         package.Rigidbody2D.position = attachPackagePointTransform.position;
-        package.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        package.gameObject.transform.position = attachPackagePointTransform.position;
 
         var packageRB = package.Rigidbody2D;
         packageRB.gravityScale = 0.0f;
@@ -143,6 +144,7 @@ public class PlayerScript : MonoBehaviour
         {
             if (!hasPackage)
                 return;
+            PackageDropped(gotHit: false);
             spot.parentBuilding.ScorePlayer(this);
             OnPlayerScore?.Invoke(PlayerIndex);
         }

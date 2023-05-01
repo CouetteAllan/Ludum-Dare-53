@@ -54,6 +54,7 @@ public class SoundManager : Singleton<SoundManager>
             s.source.outputAudioMixerGroup = s.output;
         }
 
+        this.GetComponent<GlobalSoundPlay>().Init();
     }
 
     public void Play(string name)

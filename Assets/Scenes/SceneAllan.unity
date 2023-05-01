@@ -903,6 +903,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4914707406147153249, guid: 61526c1444697a740849f4d00033325c, type: 3}
+      propertyPath: timerDelaySpawnPackage
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4914707406147153250, guid: 61526c1444697a740849f4d00033325c, type: 3}
       propertyPath: m_Name
       value: PackageManager
