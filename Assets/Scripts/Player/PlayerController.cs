@@ -315,8 +315,10 @@ public class PlayerController : MonoBehaviour
         rb.gravityScale = 0f;
         rb.drag = 0f;
 
-
-        rb.transform.LookAt(transform.position + (Vector3)dashDir,Vector2.up);
+        var angle = Vector2.SignedAngle(Vector2.right, dashDir) - 90f;
+        var targetRotation = new Vector3(0, 0, angle);
+        var lookTo = Quaternion.Euler(targetRotation);
+        rb.transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTo,1);
 
 
         while (Time.time <= dashStartTime + Data.dashTime)
@@ -331,7 +333,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 5.0f : rb.velocity / 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
-        rb.transform.LookAt(Vector2.right);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         yield return new WaitForSeconds(seconds: 0.3f);
         state = State.Normal;
     }
