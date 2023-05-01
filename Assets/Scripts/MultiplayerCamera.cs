@@ -16,7 +16,7 @@ public class MultiplayerCamera : MonoBehaviour
     [SerializeField] private float zoomlimiter = 50f;
     
     
-    [SerializeField] private Vector2 min, max;
+    //[SerializeField] private Vector2 min, max;
 
     private Vector3 velocity;
     private Camera cam;

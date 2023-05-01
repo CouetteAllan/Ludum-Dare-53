@@ -15,6 +15,7 @@ public class PackageManager : Singleton<PackageManager>
 
     public void SpawnPackage()
     {
+        Debug.Log("a");
         if(currentPackage == null)
             currentPackage = Instantiate(packagePrefab,spawns[0].transform);
         StartCoroutine(DelaySpawn(timerDelaySpawnPackage));
@@ -30,10 +31,12 @@ public class PackageManager : Singleton<PackageManager>
         UIManager.Instance.AddTargetIndicator(currentPackage.gameObject);
     }
 
+    //[System.Obsolete]
     private void Start()
     {
         PlayerScript.OnPlayerScore += PlayerScript_OnPlayerScore;
         SpawnPackage();
+        //var w = Terrain.activeTerrain.terrainData.heightmapWidth;
     }
 
     private void PlayerScript_OnPlayerScore(int playerIndex)

@@ -23,6 +23,9 @@ public class Building : MonoBehaviour
 
     private PlayerScript ownedPlayer;
 
+    public GameObject effect;
+    public SpriteRenderer filter;
+
     private void Start()
     {
         foreach(var v in Spots)
@@ -81,8 +84,10 @@ public class Building : MonoBehaviour
     {
         //mettre couleur p1p2
         var newColor = ownedPlayer.CharacterData.spriteColor;
-        newColor.a = 1;
-        graph.color = newColor;
+       // newColor.a = 1;
+        //graph.color = newColor;
+        newColor.a = 0.35f;
+        filter.color = newColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);
@@ -96,14 +101,18 @@ public class Building : MonoBehaviour
         GameManager.Instance.ScoreP1++;
 
         CurrentState = State.ColoredP1;
+        effect.SetActive(true);
+        effect.gameObject.GetComponent<Animator>().SetTrigger("Play");
     }
 
     void SetColoredP2()
     {
         //mettre couleur p1p2
         var newColor = ownedPlayer.CharacterData.spriteColor;
-        newColor.a = 1;
-        graph.color = newColor;
+       // newColor.a = 1;
+        //graph.color = newColor;
+        newColor.a = 0.35f;
+        filter.color = newColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);
@@ -117,5 +126,7 @@ public class Building : MonoBehaviour
         GameManager.Instance.ScoreP2++;
 
         CurrentState = State.ColoredP2;
+        effect.SetActive(true);
+        effect.gameObject.GetComponent<Animator>().GetComponent<Animator>().SetTrigger("Play");
     }
 }
