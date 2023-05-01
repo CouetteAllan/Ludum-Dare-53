@@ -59,7 +59,7 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
             }
             players.Add(playerRef);
         }
-        GameManager.Instance.ChangeGameState(GameState.InGame);
+        //GameManager.Instance.ChangeGameState(GameState.InGame);
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)

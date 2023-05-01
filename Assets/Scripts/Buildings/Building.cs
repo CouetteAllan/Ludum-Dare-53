@@ -89,6 +89,8 @@ public class Building : MonoBehaviour
         BuildingManager.Instance.ActivateRandomBuilding();
         if (CurrentState == State.ColoredP2)
             GameManager.Instance.ScoreP2--;
+        else if (CurrentState == State.ColoredP1)
+            return;
         GameManager.Instance.ScoreP1++;
 
         CurrentState = State.ColoredP1;
@@ -108,6 +110,8 @@ public class Building : MonoBehaviour
         BuildingManager.Instance.ActivateRandomBuilding();
         if(CurrentState == State.ColoredP1)
             GameManager.Instance.ScoreP1--;
+        else if (CurrentState == State.ColoredP2)
+            return;
         GameManager.Instance.ScoreP2++;
 
         CurrentState = State.ColoredP2;
