@@ -52,6 +52,7 @@ public class PlayerData : ScriptableObject
     public float dashVelocity;
     public float dashTime;
     public float dashBuffer = 0.1f;
+    public AnimationCurve dashCurve;
 
     [Header("Roll")]
     public float rollVelocity;

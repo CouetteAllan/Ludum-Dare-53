@@ -148,6 +148,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState == GameState.Pause)
+            return;
         #region TIMERS
         LastOnGroundTime -= Time.deltaTime;
 
@@ -196,6 +198,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.CurrentState == GameState.Pause)
+            return;
         if (player.IsStun)
             return;
         switch (state)
@@ -320,10 +324,12 @@ public class PlayerController : MonoBehaviour
         var lookTo = Quaternion.Euler(targetRotation);
         rb.transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTo,1);
 
+        float elapsedTime = 0f;
 
         while (Time.time <= dashStartTime + Data.dashTime)
         {
-            rb.velocity = dashDir.normalized * Data.dashVelocity;
+            
+            rb.velocity = dashDir.normalized * Data.dashVelocity * Data.dashCurve.Evaluate(elapsedTime / Data.dashTime);
             yield return null;
             /*if (LastOnGroundTime < 0)
                 break;*/

@@ -36,9 +36,60 @@ MonoBehaviour:
   jumpHangMaxSpeedMult: 1
   coyoteTime: 0.1
   jumpInputBufferTime: 0.15
-  dashVelocity: 48
+  dashVelocity: 32
   dashTime: 0.22
   dashBuffer: 0.1
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.6029233
+      inSlope: -15.429563
+      outSlope: -15.429563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.22134991
+    - serializedVersion: 3
+      time: 0.05348496
+      value: 1.2147851
+      inSlope: -2.385426
+      outSlope: -2.385426
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2584638
+    - serializedVersion: 3
+      time: 0.2291213
+      value: 0.9984416
+      inSlope: -0.36913022
+      outSlope: -0.36913022
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.82038355
+      outWeight: 0.11483597
+    - serializedVersion: 3
+      time: 0.5323906
+      value: 0.6415549
+      inSlope: -0.7784784
+      outSlope: -0.7784784
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.5510815
+      inSlope: -0.020019546
+      outSlope: -0.020019546
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.2662207
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   rollVelocity: 25
   rollTime: 0.4
   rollGravityScale: 8

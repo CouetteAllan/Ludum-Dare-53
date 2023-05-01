@@ -94,7 +94,7 @@ public class GameManager : Singleton<GameManager>
     public void InGame()
     {
         //Resume legame
-
+        Time.timeScale = 1.0f;
     }
 
     public void ToMenu()
@@ -105,6 +105,7 @@ public class GameManager : Singleton<GameManager>
     public void Pause()
     {
         //maybe stop time ?
+        Time.timeScale = 0.0f;
     }
     #endregion
 
