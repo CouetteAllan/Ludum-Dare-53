@@ -73,6 +73,8 @@ public class Building : MonoBehaviour
         int rand;
         rand = Random.Range(0, Spots.Count);
         Spots[rand].SetActive(true);
+        UIManager.Instance.MainCamera = Camera.main;
+        UIManager.Instance.AddTargetIndicator(Spots[rand].gameObject);
     }
 
     void SetColoredP1()
