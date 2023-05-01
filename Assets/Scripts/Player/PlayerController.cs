@@ -349,18 +349,22 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.drag = 0f;
 
+        float endInvincibility = (rollStartTime + Data.rollTime) - 0.1f;
+
         Vector2 rollDir = new Vector2(this.transform.localScale.x, 0);
 
         while (Time.time <= rollStartTime + Data.rollTime)
         {
             //perform roll physics
             rb.velocity = rollDir.normalized * Data.rollVelocity;
+            if(endInvincibility <= Time.time)
+                Physics2D.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer, false);
             yield return null;
         }
 
-        nextRollTime = Time.time + rollCooldown;
-        Physics2D.IgnoreLayerCollision(this.gameObject.layer, this.gameObject.layer, false);
         rb.velocity /= 3.0f;
+        yield return new WaitForSeconds(0.2f);
+        nextRollTime = Time.time + rollCooldown;
         state = State.Normal;
     }
     private void SetGravityScale(float scale)
