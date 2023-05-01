@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [Header ("Start")]
+    [Header ("Start-Credits")]
     [Space]
     public GameObject StartPanel;
-    public Button StartButton, SettingsButton, QuitButton;
+    public GameObject CreditsPanel;
+    public Button BackButton3;
+    public Button StartButton, SettingsButton, QuitButton, CreditsButton;
 
     [Header("Settings")]
     [Space]
@@ -37,10 +39,13 @@ public class MainMenuManager : MonoBehaviour
         StartPanel.SetActive(true);
         SettingsPanel.SetActive(false);
         CharacterSelectPanel.SetActive(false);
+        CreditsPanel.SetActive(false);
 
         StartButton.onClick.AddListener(CharacterSelect);
         SettingsButton.onClick.AddListener(Settings);
         QuitButton.onClick.AddListener(QuitGame);
+        CreditsButton.onClick.AddListener(Credits);
+        BackButton3.onClick.AddListener(Back);
 
         BackButton1.onClick.AddListener(Back);
         masterVolume.onValueChanged.AddListener(setMasterVolume);
@@ -68,6 +73,12 @@ public class MainMenuManager : MonoBehaviour
         currentP1 = 0;
         currentColP1 = 0;
         currentColP2 = 1;
+    }
+
+    void Credits()
+    {
+        CreditsPanel.SetActive(true);
+        StartPanel.SetActive(false);
     }
 
     #region Start
@@ -98,6 +109,7 @@ public class MainMenuManager : MonoBehaviour
         StartPanel.SetActive(true);
         SettingsPanel.SetActive(false);
         CharacterSelectPanel.SetActive(false);
+        CreditsPanel.SetActive(false);
     }
 
     private void setMasterVolume(float i)
