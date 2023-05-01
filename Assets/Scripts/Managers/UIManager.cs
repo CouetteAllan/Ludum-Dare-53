@@ -26,13 +26,14 @@ public class UIManager : Singleton<UIManager>
     [Space]
 
     public GameObject EndPanel;
-    public TMP_Text ScoreP1, ScoreP2;
+    public TMP_Text ScoreP1, ScoreP2, whowonText;
     public Button MenuButton2;
 
     [Header("Tuto")]
     [Space]
 
     public GameObject TutoPanel;
+    bool tutoFlag = false;
 
     protected override void Awake()
     {
@@ -74,6 +75,7 @@ public class UIManager : Singleton<UIManager>
                 break;
             case GameState.InGame:
                 DisplayUI(true);
+                DisplayTuto(false);
                 break;
             case GameState.Pause:
                 DisplayPause(true);
@@ -83,9 +85,12 @@ public class UIManager : Singleton<UIManager>
                 break;
             case GameState.StartGame:
                 DisplayUI(true);
+                DisplayTuto(true);
                 break;
         }
     }
+
+    #region display
 
     private void DisplayPause(bool state)
     {
@@ -96,6 +101,13 @@ public class UIManager : Singleton<UIManager>
     {
         UIPanel.SetActive(state);
     }
+
+    private void DisplayTuto(bool state)
+    {
+        TutoPanel.SetActive(state);
+    }
+
+    #endregion
 
     public void Resume()
     {
@@ -121,6 +133,15 @@ public class UIManager : Singleton<UIManager>
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameManager.Instance.ChangeGameState(GameState.Pause);
+        }
+
+        if (tutoFlag)
+        {
+            if(Input.anyKeyDown)
+            {
+                GameManager.Instance.ChangeGameState(GameState.InGame);
+                tutoFlag = false;
+            }
         }
     }
 
@@ -160,5 +181,18 @@ public class UIManager : Singleton<UIManager>
         EndPanel.SetActive(true);
         ScoreP1.text = GameManager.Instance.ScoreP1.ToString();
         ScoreP2.text = GameManager.Instance.ScoreP2.ToString();
+
+        if(GameManager.Instance.ScoreP1 > GameManager.Instance.ScoreP2)
+        {
+            whowonText.text = "Player 1 Wins";
+        }
+        else if (GameManager.Instance.ScoreP1 < GameManager.Instance.ScoreP2)
+        {
+            whowonText.text = "Player 2 Wins";
+        }
+        else
+        {
+            whowonText.text = "Draw";
+        }
     }
 }
