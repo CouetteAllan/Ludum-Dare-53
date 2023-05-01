@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -84,6 +85,9 @@ public class UIManager : Singleton<UIManager>
                 Win();
                 break;
             case GameState.StartGame:
+                
+                break;
+            case GameState.DebutGame:
                 DisplayUI(true);
                 DisplayTuto(true);
                 break;
@@ -95,6 +99,8 @@ public class UIManager : Singleton<UIManager>
     private void DisplayPause(bool state)
     {
         PausePanel.SetActive(state);
+        EventSystem.current.firstSelectedGameObject = ResumeButton.gameObject;
+        ResumeButton.Select();
     }
 
     private void DisplayUI(bool state)
@@ -152,12 +158,16 @@ public class UIManager : Singleton<UIManager>
     {
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(true);
+        EventSystem.current.firstSelectedGameObject = backButton.gameObject;
+        backButton.Select();
     }
 
     public void Back()
     {
         PausePanel.SetActive(true);
         SettingsPanel.SetActive(false);
+        EventSystem.current.firstSelectedGameObject = ResumeButton.gameObject;
+        ResumeButton.Select();
     }
 
     private void setMasterVolume(float i)
@@ -183,7 +193,10 @@ public class UIManager : Singleton<UIManager>
         ScoreP1.text = GameManager.Instance.ScoreP1.ToString();
         ScoreP2.text = GameManager.Instance.ScoreP2.ToString();
 
-        if(GameManager.Instance.ScoreP1 > GameManager.Instance.ScoreP2)
+        EventSystem.current.firstSelectedGameObject = MenuButton2.gameObject;
+        MenuButton2.Select();
+
+        if (GameManager.Instance.ScoreP1 > GameManager.Instance.ScoreP2)
         {
             whowonText.text = "Player 1 Wins";
         }
