@@ -23,17 +23,17 @@ MonoBehaviour:
   runAccelAmount: 43.333332
   runDecceleration: 1
   runDeccelAmount: 3.3333333
-  accelInAir: 0.195
-  deccelInAir: 0.041
+  accelInAir: 0.213
+  deccelInAir: 0.04
   doConserveMomentum: 1
   jumpHeight: 9
   jumpTimeToApex: 0.45
   jumpForce: 40
   jumpCutGravityMult: 3
-  jumpHangGravityMult: 1
-  jumpHangTimeThreshold: 0
-  jumpHangAccelerationMult: 0
-  jumpHangMaxSpeedMult: 0
+  jumpHangGravityMult: 0.963
+  jumpHangTimeThreshold: 0.15
+  jumpHangAccelerationMult: 1
+  jumpHangMaxSpeedMult: 1
   coyoteTime: 0.1
   jumpInputBufferTime: 0.15
   dashVelocity: 40

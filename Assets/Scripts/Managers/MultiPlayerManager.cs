@@ -24,7 +24,6 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
 
     private void GameManager_OnStateChanged(GameState state)
     {
-        Debug.Log("c'est bon pour vous ?");
         switch (state)
         {
             case GameState.MainMenu:
@@ -58,6 +57,7 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
             {
                 playerRef.Init(GameManager.Instance.Player2data);
             }
+            players.Add(playerRef);
         }
         GameManager.Instance.ChangeGameState(GameState.InGame);
     }
@@ -65,7 +65,6 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         Debug.Log("player joined: " + playerInput.gameObject.name);
-        players.Add(playerInput.gameObject.GetComponent<PlayerScript>());
     }
 
     private void OnPlayerLeft(PlayerInput playerInput)
@@ -77,6 +76,5 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
     private void OnDisable()
     {
         GameManager.OnStateChanged -= GameManager_OnStateChanged;
-
     }
 }

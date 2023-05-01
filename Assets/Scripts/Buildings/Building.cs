@@ -19,6 +19,8 @@ public class Building : MonoBehaviour
     [SerializeField]
     List<GameObject> Spots;
 
+    [SerializeField] private SpriteRenderer graph;
+
     private PlayerScript ownedPlayer;
 
     private void Start()
@@ -76,7 +78,9 @@ public class Building : MonoBehaviour
     void SetColoredP1()
     {
         //mettre couleur p1p2
-        this.gameObject.GetComponent<SpriteRenderer>().color = ownedPlayer.CharacterData.spriteColor;
+        var newColor = ownedPlayer.CharacterData.spriteColor;
+        newColor.a = 0.4f;
+        graph.color = newColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);
@@ -93,7 +97,9 @@ public class Building : MonoBehaviour
     void SetColoredP2()
     {
         //mettre couleur p1p2
-        this.gameObject.GetComponent<SpriteRenderer>().color = ownedPlayer.CharacterData.spriteColor;
+        var newColor = ownedPlayer.CharacterData.spriteColor;
+        newColor.a = 0.4f;
+        graph.color = newColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);

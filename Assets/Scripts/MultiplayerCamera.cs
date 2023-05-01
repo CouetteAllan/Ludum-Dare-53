@@ -5,25 +5,29 @@ using UnityEngine;
 
 public class MultiplayerCamera : MonoBehaviour
 {
-    public List<Transform> targets;
+    private List<Transform> targets = new List<Transform>();
 
-    public Vector3 offset;
-
-    public float smoothTime = 0.5f;
-
-    public float minZoom = 40f;
-    public float maxZoom = 10f;
-    public float zoomlimiter = 50f;
-
-
-    public Vector2 min, max;
+    [SerializeField] private Vector3 offset;
+    
+    [SerializeField] private float smoothTime = 0.5f;
+     
+    [SerializeField] private float minZoom = 40f;
+    [SerializeField] private float maxZoom = 10f;
+    [SerializeField] private float zoomlimiter = 50f;
+    
+    
+    [SerializeField] private Vector2 min, max;
 
     private Vector3 velocity;
     private Camera cam;
 
     private void Start()
     {
-        cam = this.GetComponent<Camera>();
+        cam = Camera.main;
+        foreach (var p in MultiPlayerManager.Instance.Players)
+        {
+            targets.Add(p.transform);
+        }
     }
 
     private void LateUpdate()

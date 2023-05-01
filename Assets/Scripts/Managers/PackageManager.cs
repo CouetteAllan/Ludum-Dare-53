@@ -11,6 +11,7 @@ public class PackageManager : Singleton<PackageManager>
     GameObject currentPackage;
 
     [SerializeField] float timerDelaySpawnPackage;
+    
 
     public void SpawnPackage()
     {
