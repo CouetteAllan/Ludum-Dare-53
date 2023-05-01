@@ -4683,6 +4683,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: advertising_board
       objectReference: {fileID: 0}
+    - target: {fileID: 4437346341878280167, guid: a568ec8177da67d4da1ed93836b2e8c3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4437346341878280168, guid: a568ec8177da67d4da1ed93836b2e8c3, type: 3}
       propertyPath: m_RootOrder
       value: 0
