@@ -6,13 +6,23 @@ public class CameraShake : MonoBehaviour
 {
     [SerializeField] private AnimationCurve curve;
     [SerializeField] private float duration = 1.0f;
+    public bool IsShaking { get; private set; }
 
-    public void ShakeCamera(float shakeMultiplier)
+    public void ShakeCamera(float shakeMultiplier, float duration)
     {
-        StartCoroutine(Shaking(shakeMultiplier));
+        IsShaking = true;
+        StartCoroutine(Shaking(shakeMultiplier, duration));
+        
     }
 
-    private IEnumerator Shaking(float shakeMultiplier)
+    public void ShakeCamera(float shakeMultiplier) 
+    {
+        IsShaking = true;
+        StartCoroutine(Shaking(shakeMultiplier, this.duration));
+
+    }
+
+    private IEnumerator Shaking(float shakeMultiplier, float duration)
     {
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
@@ -25,6 +35,7 @@ public class CameraShake : MonoBehaviour
             yield return null;
         }
 
+        IsShaking = false;
         transform.position = startPosition;
     }
 }

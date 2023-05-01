@@ -20,10 +20,12 @@ public class MultiplayerCamera : MonoBehaviour
 
     private Vector3 velocity;
     private Camera cam;
+    private CameraShake camShake;   
 
     private void Start()
     {
-        cam = Camera.main;
+        cam = Helpers.Camera;
+        camShake = this.GetComponent<CameraShake>();
         GameManager.OnStateChanged += GameManager_OnStateChanged;
         
     }
@@ -41,7 +43,7 @@ public class MultiplayerCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(targets.Count == 0)
+        if(targets.Count == 0 || camShake.IsShaking)
             return;
 
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomlimiter);

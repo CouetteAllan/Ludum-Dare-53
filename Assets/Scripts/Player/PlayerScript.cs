@@ -45,6 +45,9 @@ public class PlayerScript : MonoBehaviour
 
     private const float BASE_PACKAGE_GRAVITY = 3.0f;
 
+    private PlayerController controller;
+    private float baseSpeed;
+
     private CameraShake camRef;
     private void Awake()
     {
@@ -59,6 +62,8 @@ public class PlayerScript : MonoBehaviour
         graphObject = this.transform.GetChild(0).GetChild(0).gameObject;
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
         PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;
+        controller = GetComponent<PlayerController>();
+        
     }
 
     private void Start()
@@ -76,7 +81,7 @@ public class PlayerScript : MonoBehaviour
         //Lacher le package si y a package
         PackageDropped(gotHit: true);
         SoundManager.Instance.Play("Hit");
-        camRef.ShakeCamera(0.8f);
+        camRef.ShakeCamera(shakeMultiplier: 0.8f,duration: 0.5f);
     }
 
     IEnumerator StunState()
