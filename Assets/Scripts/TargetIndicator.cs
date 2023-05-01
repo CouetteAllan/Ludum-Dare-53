@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TargetIndicator : MonoBehaviour
 {
     public Image TargetIndicatorImage, OffscreenTargetIndicator;
-    public float OutOfSightOffset = 20f;
+    public float OutOfSightOffset = 10f;
     private float outOfSightOffset {get {return OutOfSightOffset; }}
 
     private GameObject target;
@@ -105,7 +105,7 @@ public class TargetIndicator : MonoBehaviour
 
     private Vector3 rotationOutOfSightTargetIndicator(Vector3 indicatorPosition)
     {
-        Vector3 canvasCenter = new Vector3(canvasRect.rect.width / 2f, canvasRect.rect.height / 2f, 0f) * canvasRect.localScale.x;
+        Vector3 canvasCenter = new Vector3(canvasRect.rect.width /*/ 2f*/, canvasRect.rect.height /*/ 2f*/, 0f) * canvasRect.localScale.x;
 
         float angle = Vector3.SignedAngle(Vector3.up, indicatorPosition - canvasCenter, Vector3.forward);
 
