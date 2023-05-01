@@ -163,8 +163,13 @@ public class UIManager : Singleton<UIManager>
         {
             for(int i = 0; i < targetIndicators.Count; i++)
             {
-                if (targetIndicators[i].gameObject == null)
+                if (!targetIndicators[i] || !targetIndicators[i].gameObject)
+                {
                     targetIndicators.Remove(targetIndicators[i]);
+                    if (targetIndicators.Count == 0)
+                        return;
+                }
+
                 targetIndicators[i].UpdateTargetIndicator();
             }
         }

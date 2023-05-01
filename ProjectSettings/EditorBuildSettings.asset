@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BootScene.unity
     guid: 6d5d08e2f372ea84785ed14d2f41f5c7
   - enabled: 1
-    path: Assets/Scenes/SceneQuentin.unity
-    guid: 9234e3be06f75b54aa157eb51a88ddf8
-  - enabled: 1
     path: Assets/Scenes/SceneAllan.unity
     guid: fbe05157190dccc4999a4aa744b9846f
+  - enabled: 0
+    path: Assets/Scenes/SceneQuentin.unity
+    guid: 9234e3be06f75b54aa157eb51a88ddf8
   m_configObjects: {}

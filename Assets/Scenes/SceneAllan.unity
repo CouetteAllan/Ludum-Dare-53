@@ -1169,11 +1169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58acef133b0d3d547b980c6054a4dca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 1, z: -40}
+  offset: {x: 0, y: 0, z: -40}
   smoothTime: 0.5
   minZoom: 40
-  maxZoom: 30
-  zoomlimiter: 50
+  maxZoom: 25
+  zoomlimiter: 60
 --- !u!114 &1429880330
 MonoBehaviour:
   m_ObjectHideFlags: 0
