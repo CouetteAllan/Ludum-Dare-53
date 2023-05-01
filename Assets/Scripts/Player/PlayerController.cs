@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
                         dashBufferCount = -1;
                         state = State.Dash;
                         nextDashTime = Time.time + dashCooldown;
-                        dashDir = Mathf.Abs(_moveInput.x) >= 0.01 || Mathf.Abs(_moveInput.y) >= 0.01 ? _moveInput : new Vector2(this.transform.localScale.x, 0);
+                        dashDir = Mathf.Abs(_moveInput.x) >= 0.01 || Mathf.Abs(_moveInput.y) >= 0.01 ? DirectionConvert(_moveInput) : new Vector2(this.transform.localScale.x, 0);
                         storedVelocity = this.rb.velocity;
                         dashDuration = Data.dashTime;
                         Dash();
@@ -316,19 +316,22 @@ public class PlayerController : MonoBehaviour
         rb.drag = 0f;
 
 
+        rb.transform.LookAt(transform.position + (Vector3)dashDir,Vector2.up);
+
+
         while (Time.time <= dashStartTime + Data.dashTime)
         {
             rb.velocity = dashDir.normalized * Data.dashVelocity;
             yield return null;
             /*if (LastOnGroundTime < 0)
                 break;*/
-
         }
 
         animator.SetTrigger("EndDash");
         rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 5.0f : rb.velocity / 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
+        rb.transform.LookAt(Vector2.right);
         yield return new WaitForSeconds(seconds: 0.3f);
         state = State.Normal;
     }
@@ -466,6 +469,36 @@ public class PlayerController : MonoBehaviour
     private bool CanDash() => state == State.Normal && Time.time >= nextDashTime && dashBufferCount >= 0.0f && !HasDashButStillInTheAir();
     private bool CanRoll() => state == State.Normal && Time.time >= nextRollTime;
     private bool CanDropDownFromPlatform() => state == State.Normal && canDropDown && _moveInput.normalized.y < -0.75f;
+
+    private Vector2 DirectionConvert(Vector2 inputDir)
+    {
+        return new Vector2(ClampedInput(inputDir.x), ClampedInput(inputDir.y));
+    }
+
+    private float ClampedInput(float coord)
+    {
+        //plus proche entre 0.5 et 0 ou 1 et 0.5;
+
+        if (coord > 0)
+        {
+            if (coord > 0.5)
+            {
+                return coord - 0.5f < coord - 1.0f ? 1.0f : 0.5f;
+            }
+            return coord - 0 < coord - 0.5f ? 0.5f : 0.0f;
+
+        }
+        else if (coord < 0)
+        {
+            if (coord < -0.5)
+            {
+                return coord - -1 < coord - -0.5f ? -0.5f : -1.0f;
+            }
+            return coord - -0.5f < coord - 0.0f ? -0.0f : -0.5f;
+        }
+        else
+            return 0.0f;
+    }
 
     #region EDITOR METHODS
     private void OnDrawGizmosSelected()
