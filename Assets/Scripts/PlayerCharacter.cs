@@ -10,6 +10,7 @@ public class PlayerCharacter : ScriptableObject
     public AnimatorController animController;
     public CharacterType characterType;
     public Sprite art;
+    public Chroma chroma;
 }
 
 public enum CharacterType
@@ -17,4 +18,13 @@ public enum CharacterType
     Potito,
     Potita,
     James
+}
+
+public enum Chroma
+{
+    Blue,
+    Orange,
+    Yellow,
+    Pink,
+    Green
 }

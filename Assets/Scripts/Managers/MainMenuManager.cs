@@ -21,13 +21,16 @@ public class MainMenuManager : MonoBehaviour
     public GameObject CharacterSelectPanel;
     public Button PlayButton,BackButton2;
 
-    private int currentP1;
-    private int currentP2;
+    private int currentP1, currentColP1;
+    private int currentP2, currentColP2;
     public List<PlayerCharacter> characterDataList;
+    public List<Chroma> chromaList;
     public GameObject spriteP1;
+    public GameObject colorP1;
     public GameObject spriteP2;
-    public Button LeftButtonP1, RightButtonP1;
-    public Button LeftButtonP2, RightButtonP2;
+    public GameObject colorP2;
+    public Button LeftButtonP1, RightButtonP1, LeftColorButtonP1, RightColorButtonP1;
+    public Button LeftButtonP2, RightButtonP2, LeftColorButtonP2, RightColorButtonP2;
 
     private void Awake()
     {
@@ -47,6 +50,10 @@ public class MainMenuManager : MonoBehaviour
         BackButton2.onClick.AddListener(Back);
         LeftButtonP1.onClick.AddListener(LeftP1);
         RightButtonP1.onClick.AddListener(RightP1);
+        LeftColorButtonP1.onClick.AddListener(LeftColorP1);
+        RightColorButtonP1.onClick.AddListener(RightColorP1);
+        LeftColorButtonP2.onClick.AddListener(LeftColorP2);
+        RightColorButtonP2.onClick.AddListener(RightColorP2);
         LeftButtonP2.onClick.AddListener(LeftP2);
         RightButtonP2.onClick.AddListener(RightP2);
         PlayButton.onClick.AddListener(StartGame);
@@ -59,6 +66,8 @@ public class MainMenuManager : MonoBehaviour
         sfxVolume.value = SoundManager.Instance.sfxVolume;
         currentP2 = 1;
         currentP1 = 0;
+        currentColP1 = 0;
+        currentColP2 = 1;
     }
 
     #region Start
@@ -138,6 +147,24 @@ public class MainMenuManager : MonoBehaviour
         spriteP1.GetComponent<Image>().sprite = characterDataList[currentP1].art;
     }
 
+    private void LeftColorP1()
+    {
+        if (currentColP1 == 0)
+            currentColP1 = chromaList.Count - 1;
+        else
+            currentColP1--;
+        colorP1.GetComponent<Image>().color = SetColor(chromaList[currentColP1]);
+    }
+
+    private void RightColorP1()
+    {
+        if (currentColP1 == chromaList.Count - 1)
+            currentColP1 = 0;
+        else
+            currentColP1++;
+        colorP1.GetComponent<Image>().color = SetColor(chromaList[currentColP1]);
+    }
+
     private void LeftP2()
     {
         if (currentP2 == 0)
@@ -155,6 +182,34 @@ public class MainMenuManager : MonoBehaviour
             currentP2++;
         spriteP2.GetComponent<Image>().sprite = characterDataList[currentP2].art;
     }
+
+    private void LeftColorP2()
+    {
+        if (currentColP2 == 0)
+            currentColP2 = chromaList.Count - 1;
+        else
+            currentColP2--;
+        colorP2.GetComponent<Image>().color = SetColor(chromaList[currentColP2]);
+    }
+    private void RightColorP2()
+    {
+        if (currentColP2 == chromaList.Count - 1)
+            currentColP2 = 0;
+        else
+            currentColP2++;
+        colorP2.GetComponent<Image>().color = SetColor(chromaList[currentColP2]);
+    }
+
+
+    private const float COLOR_RATIO = 255.0f;
+    private Color SetColor(Chroma chroma) => chroma switch
+    {
+        Chroma.Blue => new Color(103.0f/ COLOR_RATIO, 165.0f/ COLOR_RATIO, 255.0f/ COLOR_RATIO, 1),
+        Chroma.Orange => new Color(255/ COLOR_RATIO, 143/ COLOR_RATIO, 50/ COLOR_RATIO,1),
+        Chroma.Yellow => new Color(251 / COLOR_RATIO, 255 / COLOR_RATIO, 119 / COLOR_RATIO,1),
+        Chroma.Pink => new Color(240 / COLOR_RATIO, 62 / COLOR_RATIO, 255 / COLOR_RATIO, 1),
+        Chroma.Green => new Color(78 / COLOR_RATIO, 250 / COLOR_RATIO, 115 / COLOR_RATIO, 1),
+    };
 
     #endregion
 }
