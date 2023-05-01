@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5acb1aec4bd1c924a88bd39f2da55ebf, type: 3}
   m_Name: PotitaCharacter
   m_EditorClassIdentifier: 
-  spriteColor: {r: 0.16862746, g: 0.47058827, b: 0.6039216, a: 1}
+  spriteColor: {r: 0.19063723, g: 0.60797334, b: 0.6415094, a: 1}
   animController: {fileID: 9100000, guid: 31273fd6d0e9754489db12f63d2064c0, type: 2}
   characterType: 1
   art: {fileID: 21300000, guid: 80fa4e42a73228841aa65be21b3dff7e, type: 3}

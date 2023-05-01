@@ -79,7 +79,7 @@ public class Building : MonoBehaviour
     {
         //mettre couleur p1p2
         var newColor = ownedPlayer.CharacterData.spriteColor;
-        newColor.a = 0.4f;
+        newColor.a = 1;
         graph.color = newColor;
         foreach (var v in Spots)
         {
@@ -98,7 +98,7 @@ public class Building : MonoBehaviour
     {
         //mettre couleur p1p2
         var newColor = ownedPlayer.CharacterData.spriteColor;
-        newColor.a = 0.4f;
+        newColor.a = 1;
         graph.color = newColor;
         foreach (var v in Spots)
         {

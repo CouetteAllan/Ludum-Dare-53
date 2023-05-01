@@ -24,9 +24,18 @@ public class MultiplayerCamera : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
-        foreach (var p in MultiPlayerManager.Instance.Players)
+        GameManager.OnStateChanged += GameManager_OnStateChanged;
+        
+    }
+
+    private void GameManager_OnStateChanged(GameState state)
+    {
+        if(state == GameState.DebutGame)
         {
-            targets.Add(p.transform);
+            foreach (var p in MultiPlayerManager.Instance.Players)
+            {
+                targets.Add(p.transform);
+            }
         }
     }
 
