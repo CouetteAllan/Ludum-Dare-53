@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
     private InputAction interactAction;
     private InputAction dashAction;
     private InputAction rollAction;
+    private InputAction pauseAction;
 
     private GameObject graphObject;
     private Collider2D collisionBox;
@@ -100,13 +101,16 @@ public class PlayerController : MonoBehaviour
         interactAction = inputAction.actions["Interact"];
         dashAction = inputAction.actions["Dash"];
         rollAction = inputAction.actions["Roll"];
+        pauseAction = inputAction.actions["PauseMenu"];
         jumpAction.started += Jump_started;
         jumpAction.canceled += Jump_canceled;
         dashAction.performed += DashAction_performed;
         rollAction.performed += RollAction_performed;
+        pauseAction.performed += PauseAction_performed;
         #endregion
     }
 
+   
     #region InputActionEvents
     private void Jump_started(InputAction.CallbackContext obj)
     {
@@ -117,6 +121,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         LastPressedJumpTime = Data.jumpInputBufferTime;
+    }
+    private void PauseAction_performed(InputAction.CallbackContext obj)
+    {
+        GameManager.Instance.ChangeGameState(GameState.Pause);
     }
 
     private void Jump_canceled(InputAction.CallbackContext obj)

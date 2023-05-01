@@ -49,6 +49,8 @@ public class PlayerScript : MonoBehaviour
     private float baseSpeed;
 
     private CameraShake camRef;
+
+    private PlatformEffector2D platform;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -63,7 +65,7 @@ public class PlayerScript : MonoBehaviour
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
         PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;
         controller = GetComponent<PlayerController>();
-        
+        controller.OnDropDown += PassThroughPlatform;
     }
 
     private void Start()
@@ -159,6 +161,43 @@ public class PlayerScript : MonoBehaviour
             spot.parentBuilding.ScorePlayer(this);
             OnPlayerScore?.Invoke(PlayerIndex);
         }
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.TryGetComponent<PlatformEffector2D>(out PlatformEffector2D effector))
+        {
+            this.platform = effector;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<PlatformEffector2D>(out PlatformEffector2D effector))
+        {
+            this.platform = null;
+        }
+    }
+
+    private void PassThroughPlatform()
+    {
+        StartCoroutine(DisableCollision());
+    }
+
+    private void OnDisable()
+    {
+        controller.OnDropDown -= PassThroughPlatform;
+    }
+
+    private IEnumerator DisableCollision()
+    {
+        var platformCollider = platform.gameObject.GetComponent<Collider2D>();
+        var playerCollider = this.GetComponent<Collider2D>();
+
+        Physics2D.IgnoreCollision(platformCollider, playerCollider, true);
+        yield return new WaitForSeconds(0.3f);
+        Physics2D.IgnoreCollision(platformCollider, playerCollider, false);
     }
 
     private bool CanPickUpPackage()
