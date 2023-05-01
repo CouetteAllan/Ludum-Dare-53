@@ -197,6 +197,7 @@ public class PlayerController : MonoBehaviour
                 case State.Dash:
                     break;
                 case State.Roll:
+                    CheckGrounded();
                     break;
             }
         }
