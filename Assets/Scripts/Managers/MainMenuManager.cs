@@ -124,6 +124,8 @@ public class MainMenuManager : MonoBehaviour
         var gameManager = GameManager.Instance;
         //Set up les characters data séléctionnés
 
+        characterDataList[currentP1].spriteColor = SetColor(chromaList[currentColP1]);
+        characterDataList[currentP2].spriteColor = SetColor(chromaList[currentColP2]);
         gameManager.SetFirstCharacter(characterDataList[currentP1]);
         gameManager.SetSecondCharacter(characterDataList[currentP2]);
         gameManager.ChangeGameState(GameState.StartGame);

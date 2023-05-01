@@ -73,10 +73,8 @@ public class PlayerScript : MonoBehaviour
         //Stun
         StartCoroutine(StunState());
         //Lacher le package si y a package
-        hasPackage = false; 
         PackageDropped(gotHit: true);
         SoundManager.Instance.Play("Hit");
-        Debug.Log("hit");
     }
 
     IEnumerator StunState()
@@ -93,6 +91,7 @@ public class PlayerScript : MonoBehaviour
         if (!hasPackage)
             return;
 
+        Debug.Log("DROP IT JSDFL");
         //Drop le paquet (à ses pieds ?)
         ownedPackage.transform.SetParent(null);
         ownedPackage.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
