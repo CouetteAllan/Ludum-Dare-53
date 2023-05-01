@@ -1,18 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class FXManager : MonoBehaviour
+public class FXManager : Singleton<FXManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private List<VFXdatas> vfxList = new List<VFXdatas>();
+
+    private List<GameObject> instantiatedVFXList = new List<GameObject>();
+
+
+    public void PlayEffect(string effectName, Vector3 worldPos)
     {
-        
+        var vfx = Instantiate(vfxList.First(b => effectName == b.FXName).FXprefab, worldPos, Quaternion.identity);
+        instantiatedVFXList.Add(vfx);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DestroyEffect()
     {
-        
+        foreach (var item in instantiatedVFXList)
+        {
+            Destroy(item.gameObject);
+        }
     }
+}
+
+[Serializable]
+public struct VFXdatas
+{
+    public string FXName;
+    public GameObject FXprefab;
 }
