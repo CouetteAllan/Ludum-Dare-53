@@ -36,6 +36,13 @@ public class UIManager : Singleton<UIManager>
     public GameObject TutoPanel;
     bool tutoFlag = false;
 
+    [Header("TargetIndicator")]
+    [Space]
+    public Canvas canvas;
+    public List<TargetIndicator> targetIndicators = new List<TargetIndicator>();
+    public Camera MainCamera;
+    public GameObject TargetIndicatorPrefab;
+
     protected override void Awake()
     {
         base.Awake();
@@ -85,11 +92,11 @@ public class UIManager : Singleton<UIManager>
                 Win();
                 break;
             case GameState.StartGame:
-                
                 break;
             case GameState.DebutGame:
                 DisplayUI(true);
                 DisplayTuto(true);
+                MainCamera = Camera.main;
                 break;
         }
     }
@@ -150,6 +157,22 @@ public class UIManager : Singleton<UIManager>
                 tutoFlag = false;
             }
         }
+
+
+        if(targetIndicators.Count > 0)
+        {
+            for(int i = 0; i < targetIndicators.Count; i++)
+            {
+                targetIndicators[i].UpdateTargetIndicator();
+            }
+        }
+    }
+
+    public void AddTargetIndicator(GameObject target)
+    {
+        TargetIndicator indicator = GameObject.Instantiate(TargetIndicatorPrefab, canvas.transform).GetComponent<TargetIndicator>();
+        indicator.InitialiseTargetIndicator(target, MainCamera, canvas);
+        targetIndicators.Add(indicator);
     }
 
     #region Settings

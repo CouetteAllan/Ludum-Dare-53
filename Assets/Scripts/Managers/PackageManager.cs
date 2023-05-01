@@ -27,6 +27,7 @@ public class PackageManager : Singleton<PackageManager>
         yield return new WaitForSeconds(delay);
         currentPackage.transform.position = spawns[0].transform.position;
         currentPackage.SetActive(true);
+        UIManager.Instance.AddTargetIndicator(currentPackage.gameObject);
     }
 
     private void Start()

@@ -47,13 +47,13 @@ public class MultiplayerCamera : MonoBehaviour
             return;
 
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomlimiter);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, newZoom, Time.deltaTime);
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
 
 
         Vector3 centerPoint = GetCenterPoint();
         Vector3 newPosition = centerPoint + offset;
 
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, min.x, max.x), Mathf.Clamp(transform.position.y, min.y, max.y), transform.position.z);
+        //transform.position = new Vector3(Mathf.Clamp(transform.position.x, min.x, max.x), Mathf.Clamp(transform.position.y, min.y, max.y), transform.position.z);
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
     }
 

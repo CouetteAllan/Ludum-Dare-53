@@ -1098,7 +1098,7 @@ Camera:
   near clip plane: 0.1
   far clip plane: 5000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 15.79
   m_Depth: -1
   m_CullingMask:
@@ -1176,13 +1176,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58acef133b0d3d547b980c6054a4dca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: -10}
+  offset: {x: 0, y: 1, z: -40}
   smoothTime: 0.5
   minZoom: 40
-  maxZoom: 0.8
+  maxZoom: 20
   zoomlimiter: 50
-  min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  min: {x: 0, y: 4}
+  max: {x: 0, y: -2}
 --- !u!114 &1429880330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1953,6 +1953,10 @@ PrefabInstance:
     - target: {fileID: 1944247297384696659, guid: 89e6e8b59b4ba8e45ae5c50f705ba2dc, type: 3}
       propertyPath: m_Name
       value: BuildingManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1944247297384696660, guid: 89e6e8b59b4ba8e45ae5c50f705ba2dc, type: 3}
+      propertyPath: buildings.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1944247297384696660, guid: 89e6e8b59b4ba8e45ae5c50f705ba2dc, type: 3}
       propertyPath: buildings.Array.data[0]
