@@ -105,6 +105,7 @@ public class UIManager : Singleton<UIManager>
     private void DisplayTuto(bool state)
     {
         TutoPanel.SetActive(state);
+        tutoFlag = true;
     }
 
     #endregion
