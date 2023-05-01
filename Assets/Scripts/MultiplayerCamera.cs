@@ -20,29 +20,34 @@ public class MultiplayerCamera : MonoBehaviour
 
     private Vector3 velocity;
     private Camera cam;
-    private CameraShake camShake;   
+    private CameraShake camShake;
+    bool playersFlag = true;
 
     private void Start()
     {
         cam = Helpers.Camera;
         camShake = this.GetComponent<CameraShake>();
-        GameManager.OnStateChanged += GameManager_OnStateChanged;
+        //GameManager.OnStateChanged += GameManager_OnStateChanged;
         
     }
 
-    private void GameManager_OnStateChanged(GameState state)
+    /*private void GameManager_OnStateChanged(GameState state)
     {
-        if(state == GameState.DebutGame)
+        
+    }*/
+
+    private void LateUpdate()
+    {
+
+        if (GameManager.Instance.CurrentState == GameState.DebutGame)
         {
             foreach (var p in MultiPlayerManager.Instance.Players)
             {
                 targets.Add(p.transform);
             }
         }
-    }
 
-    private void LateUpdate()
-    {
+
         if(targets.Count == 0 || camShake.IsShaking)
             return;
 
