@@ -10,6 +10,8 @@ public class Package : MonoBehaviour,IPickUpItem
     public float speed = 0.05f, timer = 1f;
     private float privTimer;
 
+    [SerializeField] private SpriteRenderer graphObject;
+
     [SerializeField] public Rigidbody2D Rigidbody2D { get; private set; }
     public void PickUp(PlayerScript player)
     {
@@ -21,6 +23,7 @@ public class Package : MonoBehaviour,IPickUpItem
         //Play sound
         //Play feedback visuels
         //Disable toutes les collisions.
+        graphObject.color = player.CharacterData.spriteColor;
     }
 
     public void DropPackage(bool gotHit)
