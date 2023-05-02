@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundsEffects:
   - name: Score
-    clip: {fileID: 8300000, guid: ff04681f60bc735408842213552a54bd, type: 3}
+    clip: {fileID: 8300000, guid: 073818c726a8d0c42b389a8aa8347db4, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.606
     pitch: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: Hit
-    clip: {fileID: 8300000, guid: 09d728b53a5c0d8418fa86da2163c253, type: 3}
+    clip: {fileID: 8300000, guid: 627e58101264727409d540aff9d8e1ac, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.69
     pitch: 0
@@ -63,7 +63,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: Dash
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4d03e81bef356b54d9b4d4e6c38c3aef, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.671
     pitch: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: Jump
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: dbc2f1db5bb37784096a2fe9c9f0af5c, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.71
     pitch: 0
@@ -87,7 +87,15 @@ MonoBehaviour:
     playOnAwake: 0
     source: {fileID: 0}
   - name: Step
-    clip: {fileID: 8300000, guid: 2fad8ba62beb9ae4f8730657fe44ccbd, type: 3}
+    clip: {fileID: 8300000, guid: 011c2de75ec11e945bc9a68d3e16e829, type: 3}
+    output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.574
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: ButtonClick
+    clip: {fileID: 8300000, guid: 9f9625e1cf91f754a94065c962432d11, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.574
     pitch: 0
@@ -96,7 +104,7 @@ MonoBehaviour:
     source: {fileID: 0}
   musics:
   - name: MainMenuMusic
-    clip: {fileID: 8300000, guid: ed3f8bfba57e5a348bf218c6ad423364, type: 3}
+    clip: {fileID: 8300000, guid: 7a98c0ca3723ac94c8398570cd9a6766, type: 3}
     output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.543
     pitch: 0
@@ -304,10 +312,6 @@ PrefabInstance:
     - target: {fileID: 2111073116928009661, guid: 01a7011e239933f419bffb45bdb65b34, type: 3}
       propertyPath: m_Name
       value: UIManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 2111073116928009661, guid: 01a7011e239933f419bffb45bdb65b34, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2111073117009607886, guid: 01a7011e239933f419bffb45bdb65b34, type: 3}
       propertyPath: m_AnchorMax.x
