@@ -125,6 +125,8 @@ public class UIManager : Singleton<UIManager>
 
     public void Resume()
     {
+        SoundManager.Instance.Play("Splat");
+
         //Resume the game when button Resume is clicked
         GameManager.Instance.ChangeGameState(GameState.InGame);
         DisplayPause(false);
@@ -133,6 +135,8 @@ public class UIManager : Singleton<UIManager>
 
     public void MainMenu()
     {
+        SoundManager.Instance.Play("Splat");
+
         //Ouvrir la BootScene
         UIPanel.SetActive(false);
         EndPanel.SetActive(false);
@@ -186,6 +190,8 @@ public class UIManager : Singleton<UIManager>
 
     public void Settings()
     {
+        SoundManager.Instance.Play("Splat");
+
         PausePanel.SetActive(false);
         SettingsPanel.SetActive(true);
         EventSystem.current.firstSelectedGameObject = backButton.gameObject;
@@ -194,6 +200,8 @@ public class UIManager : Singleton<UIManager>
 
     public void Back()
     {
+        SoundManager.Instance.Play("Splat");
+
         PausePanel.SetActive(true);
         SettingsPanel.SetActive(false);
         EventSystem.current.firstSelectedGameObject = ResumeButton.gameObject;

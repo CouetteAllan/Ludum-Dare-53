@@ -123,6 +123,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Back()
     {
+        SoundManager.Instance.Play("Splat");
         StartPanel.SetActive(true);
         SettingsPanel.SetActive(false);
         CharacterSelectPanel.SetActive(false);
@@ -152,6 +153,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void StartGame()
     {
+        SoundManager.Instance.Play("Splat");
         var gameManager = GameManager.Instance;
         //Set up les characters data séléctionnés
 
@@ -175,6 +177,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void LeftP1()
     {
+        SoundManager.Instance.Play("Splat");
         if (currentP1 == 0)
             currentP1 = characterDataList.Count-1;
         else
@@ -183,8 +186,9 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void RightP1()
-    {
-        if (currentP1 == characterDataList.Count-1)
+{
+        SoundManager.Instance.Play("Splat");
+    if (currentP1 == characterDataList.Count-1)
             currentP1 = 0;
         else
             currentP1++;
@@ -192,8 +196,9 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void LeftColorP1()
-    {
-        if (currentColP1 == 0)
+{
+        SoundManager.Instance.Play("Splat");
+    if (currentColP1 == 0)
             currentColP1 = chromaList.Count - 1;
         else
             currentColP1--;
@@ -202,8 +207,9 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void RightColorP1()
-    {
-        if (currentColP1 == chromaList.Count - 1)
+{
+        SoundManager.Instance.Play("Splat");
+    if (currentColP1 == chromaList.Count - 1)
             currentColP1 = 0;
         else
             currentColP1++;
@@ -213,6 +219,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void LeftP2()
     {
+        SoundManager.Instance.Play("Splat");
         if (currentP2 == 0)
             currentP2 = characterDataList.Count - 1;
         else
@@ -222,6 +229,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void RightP2()
     {
+        SoundManager.Instance.Play("Splat");
         if (currentP2 == characterDataList.Count - 1)
             currentP2 = 0;
         else
@@ -231,6 +239,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void LeftColorP2()
     {
+        SoundManager.Instance.Play("Splat");
         if (currentColP2 == 0)
             currentColP2 = chromaList.Count - 1;
         else
@@ -240,6 +249,8 @@ public class MainMenuManager : MonoBehaviour
     }
     private void RightColorP2()
     {
+        SoundManager.Instance.Play("Splat");
+
         if (currentColP2 == chromaList.Count - 1)
             currentColP2 = 0;
         else
