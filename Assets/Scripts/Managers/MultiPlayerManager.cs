@@ -63,11 +63,6 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
         //GameManager.Instance.ChangeGameState(GameState.InGame);
     }
 
-    private void CheckDevice()
-    {
-
-    }
-
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         Debug.Log("player joined: " + playerInput.gameObject.name);

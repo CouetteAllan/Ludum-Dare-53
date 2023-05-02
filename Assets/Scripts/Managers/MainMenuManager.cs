@@ -42,7 +42,6 @@ public class MainMenuManager : MonoBehaviour
     private InputAction leftSelectP2;
     private InputAction rightSelectP2;
 
-    public InputSystemUIInputModule input;
 
     private void Awake()
     {
@@ -72,7 +71,6 @@ public class MainMenuManager : MonoBehaviour
         LeftButtonP2.onClick.AddListener(LeftP2);
         RightButtonP2.onClick.AddListener(RightP2);
         PlayButton.onClick.AddListener(StartGame);
-
 
     }
 
