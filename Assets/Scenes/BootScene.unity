@@ -1427,7 +1427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 554831701}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Character1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,7 +1924,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687301494}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Character2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5945,7 +5945,7 @@ GameObject:
   - component: {fileID: 1937380674}
   - component: {fileID: 1937380676}
   - component: {fileID: 1937380675}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: SpriteP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6619,7 +6619,7 @@ GameObject:
   - component: {fileID: 2124984901}
   - component: {fileID: 2124984903}
   - component: {fileID: 2124984902}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: SpriteP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
