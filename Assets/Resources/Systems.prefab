@@ -94,7 +94,7 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     source: {fileID: 0}
-  - name: ButtonClick
+  - name: Splat
     clip: {fileID: 8300000, guid: 9f9625e1cf91f754a94065c962432d11, type: 3}
     output: {fileID: 4408351948149770740, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
     volume: 0.574

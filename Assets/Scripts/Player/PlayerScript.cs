@@ -66,6 +66,7 @@ public class PlayerScript : MonoBehaviour
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
         PlayerIndex = this.gameObject.GetComponent<PlayerInput>().playerIndex;
         controller = GetComponent<PlayerController>();
+        animator.runtimeAnimatorController = datas.animController;
         controller.OnDropDown += PassThroughPlatform;
     }
 
@@ -77,6 +78,7 @@ public class PlayerScript : MonoBehaviour
     private void OnHit()
     {
         //Instancier jouer l'FX de hit.
+        animator.SetBool("IsStun", true);
         animator.SetTrigger("Hit");
         VFX.PlayEffect("Hit");
         //Stun
@@ -90,11 +92,10 @@ public class PlayerScript : MonoBehaviour
     IEnumerator StunState()
     {
         graphObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-        animator.SetBool("Stun", true);
         isStun = true;
         yield return new WaitForSeconds(stunTime);
         isStun = false;
-        animator.SetBool("Stun", false);
+        animator.SetBool("IsStun", false);
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
     }
 
