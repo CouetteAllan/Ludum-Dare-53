@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 32c1a0b75e424f742bc456a131082bf1, type: 2}
-  dashCooldown: 1.5
+  dashCooldown: 1
   rollCooldown: 0.3
   _groundLayer:
     serializedVersion: 2

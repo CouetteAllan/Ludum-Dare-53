@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         SetUpGravity();
-        animator.SetBool("IsGrounded", CanJumpFromGround());
+        animator.SetBool("IsGrounded", LastOnGroundTime > 0);
     }
 
     private void FixedUpdate()
@@ -217,6 +217,8 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Normal:
                 Run();
+                break;
+            case State.Roll:
                 break;
         }
     }
@@ -324,6 +326,7 @@ public class PlayerController : MonoBehaviour
         float dashStartTime = Time.time;
         IsJumping = false;
         animator.SetTrigger("Dash");
+        bool dashedFromTheAir = LastOnGroundTime <= 0;
 
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
@@ -340,17 +343,17 @@ public class PlayerController : MonoBehaviour
         {
             
             rb.velocity = dashDir.normalized * Data.dashVelocity * Data.dashCurve.Evaluate(elapsedTime / Data.dashTime);
+            if (LastOnGroundTime > 0 && dashedFromTheAir)
+                break;
             yield return null;
-            /*if (LastOnGroundTime < 0)
-                break;*/
         }
 
         animator.SetTrigger("EndDash");
-        rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 5.0f : rb.velocity / 10.0f;
+        rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 4.0f : rb.velocity / 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        yield return new WaitForSeconds(seconds: 0.3f);
+        yield return dashedFromTheAir ? null :  new WaitForSeconds(seconds: 0.3f);
         state = State.Normal;
     }
     private void Roll()
@@ -386,6 +389,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity /= 3.0f;
         yield return new WaitForSeconds(0.2f);
         nextRollTime = Time.time + rollCooldown;
+        LastOnGroundTime = Data.coyoteTime;
         state = State.Normal;
     }
     private void SetGravityScale(float scale)
