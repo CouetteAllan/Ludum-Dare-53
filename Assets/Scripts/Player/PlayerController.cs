@@ -265,6 +265,7 @@ public class PlayerController : MonoBehaviour
 
         float movement = speedDif * accelRate;
 
+        movement = player.HasPackage ? movement / 1.25f : movement;
         //Convert this to a vector and apply to rigidbody
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }

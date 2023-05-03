@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     public SelectedCharacterData CharacterData { get { return characterData; } }
     [SerializeField] private Transform attachPackagePointTransform;
     private bool hasPackage = false;
+    public bool HasPackage { get { return hasPackage; } }
     private Package ownedPackage = null;
     public event Action<bool> OnPackageDrop;
     public event Action OnPackagePickUp;

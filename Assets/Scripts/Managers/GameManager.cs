@@ -86,7 +86,7 @@ public class GameManager : Singleton<GameManager>
         {
             yield return null;
         }
-        GlobalTimer = 120.0f;
+        GlobalTimer = 180.0f;
         ScoreP1 = 0f;
         ScoreP2 = 0f;
         ChangeGameState(GameState.DebutGame);

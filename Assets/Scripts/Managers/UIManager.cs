@@ -96,7 +96,7 @@ public class UIManager : Singleton<UIManager>
             case GameState.DebutGame:
                 DisplayUI(true);
                 DisplayTuto(true);
-                MainCamera = Camera.main;
+                MainCamera = Helpers.Camera;
                 break;
         }
     }
@@ -148,10 +148,6 @@ public class UIManager : Singleton<UIManager>
     private void Update()
     {
         timer.text = ((int)GameManager.Instance.GlobalTimer).ToString();
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            GameManager.Instance.ChangeGameState(GameState.Pause);
-        }
 
         if (tutoFlag)
         {
