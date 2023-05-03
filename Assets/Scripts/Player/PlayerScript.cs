@@ -90,9 +90,11 @@ public class PlayerScript : MonoBehaviour
     IEnumerator StunState()
     {
         graphObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+        animator.SetBool("Stun", true);
         isStun = true;
         yield return new WaitForSeconds(stunTime);
         isStun = false;
+        animator.SetBool("Stun", false);
         graphObject.GetComponent<SpriteRenderer>().color = characterData.spriteColor;
     }
 

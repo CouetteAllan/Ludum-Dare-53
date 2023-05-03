@@ -195,6 +195,7 @@ public class PlayerController : MonoBehaviour
                     animator.SetFloat("SpeedY", this.rb.velocity.y);
                     break;
                 case State.Dash:
+                    CheckGrounded();
                     break;
                 case State.Roll:
                     CheckGrounded();
@@ -326,7 +327,7 @@ public class PlayerController : MonoBehaviour
         float dashStartTime = Time.time;
         IsJumping = false;
         animator.SetTrigger("Dash");
-        bool dashedFromTheAir = LastOnGroundTime <= 0;
+        bool dashedFromTheAir = LastOnGroundTime <= 0.02f;
 
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0f;
@@ -338,22 +339,26 @@ public class PlayerController : MonoBehaviour
         rb.transform.rotation = Quaternion.RotateTowards(transform.rotation, lookTo,1);
 
         float elapsedTime = 0f;
+        bool recoveredOnGround = false;
 
         while (Time.time <= dashStartTime + Data.dashTime)
         {
             
             rb.velocity = dashDir.normalized * Data.dashVelocity * Data.dashCurve.Evaluate(elapsedTime / Data.dashTime);
-            if (LastOnGroundTime > 0 && dashedFromTheAir)
+            if (LastOnGroundTime > 0 && dashedFromTheAir && this.rb.velocity.y <= -1)
+            {
+                recoveredOnGround = true;
                 break;
+            }
             yield return null;
         }
 
         animator.SetTrigger("EndDash");
-        rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 4.0f : rb.velocity / 10.0f;
+        rb.velocity = LastOnGroundTime < 0 ? rb.velocity / 7.0f : rb.velocity / 10.0f;
         Data.jumpInputBufferTime = baseJumpBufferTime;
         hasDashed = true;
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        yield return dashedFromTheAir ? null :  new WaitForSeconds(seconds: 0.3f);
+        yield return recoveredOnGround ? null :  new WaitForSeconds(seconds: 0.3f);
         state = State.Normal;
     }
     private void Roll()
