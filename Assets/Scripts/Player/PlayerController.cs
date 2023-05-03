@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
     {
 
         //Calculate the direction we want to move in and our desired velocity
-        float targetSpeed = _moveInput.x * Data.runMaxSpeed;
+        float targetSpeed = _moveInput.normalized.x * Data.runMaxSpeed;
         //We can reduce are control using Lerp() this smooths changes to are direction and speed
         targetSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, 1);
 
@@ -392,9 +392,11 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity /= 3.0f;
-        yield return new WaitForSeconds(0.2f);
-        nextRollTime = Time.time + rollCooldown;
         LastOnGroundTime = Data.coyoteTime;
+        yield return new WaitForSeconds(0.28f);
+        LastOnGroundTime = Data.coyoteTime + 0.5f;
+
+        nextRollTime = Time.time + rollCooldown;
         state = State.Normal;
     }
     private void SetGravityScale(float scale)

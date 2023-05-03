@@ -22,6 +22,7 @@ public class Package : MonoBehaviour,IPickUpItem
         player.OnPackageDrop += DropPackage;
         //Play sound
         //Play feedback visuels
+        FXManager.Instance.PlayEffect("PickUpItem", this.transform.position);
         //Disable toutes les collisions.
         graphObject.color = player.CharacterData.spriteColor;
     }

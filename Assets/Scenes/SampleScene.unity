@@ -2061,6 +2061,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6000376060486267915, guid: a712f59424168e144b8860af84fc238d, type: 3}
   m_PrefabInstance: {fileID: 815318147}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &908901346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908901348}
+  - component: {fileID: 908901347}
+  m_Layer: 0
+  m_Name: FXmanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &908901347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908901346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c93a73e80f56b74e846ae0bc5b782c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vfxList:
+  - FXName: PickUpItem
+    FXprefab: {fileID: 2873963522799382661, guid: e65d29bdd17ca124b8100cadf06c60da, type: 3}
+--- !u!4 &908901348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908901346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.81728, y: -5.0303917, z: -0.559393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &918009677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3457,12 +3504,12 @@ GameObject:
   - component: {fileID: 1547256733}
   - component: {fileID: 1547256735}
   - component: {fileID: 1547256734}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1547256733
 Transform:
@@ -3835,7 +3882,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.1094971, y: -0.100821495}
+  m_Offset: {x: 3.942295, y: -0.100821495}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3846,7 +3893,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 104.32396, y: 2.298357}
+  m_Size: {x: 114.42754, y: 2.298357}
   m_EdgeRadius: 0
 --- !u!1001 &1889249224
 PrefabInstance:
