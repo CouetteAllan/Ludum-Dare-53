@@ -92,4 +92,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   rollVelocity: 25
   rollTime: 0.4
-  rollGravityScale: 8
+  rollGravityScale: 3
