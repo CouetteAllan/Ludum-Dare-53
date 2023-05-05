@@ -6,18 +6,29 @@ using UnityEngine;
 public class BuildingManager : Singleton<BuildingManager>
 {
     [SerializeField]
-    List<Building> buildings;
-
+    private List<Building> buildings = new List<Building>();
+    private List<Building> buildingsColored = new List<Building>();
     
 
     public void ActivateRandomBuilding()
     {
         int rand;
-        do
+        if(AllBuildingAreColored)
+        {
+            do
+            {
+                rand = Random.Range(0, buildingsColored.Count);
+            } while (buildingsColored[rand].CurrentState == State.Active);
+            buildingsColored[rand].ChangeState(State.Active);
+        }
+        else
         {
             rand = Random.Range(0, buildings.Count);
-        } while (buildings[rand].CurrentState == State.Active);
-        buildings[rand].ChangeState(State.Active);
+            buildings[rand].ChangeState(State.Active);
+            buildingsColored.Add(buildings[rand]);
+            buildings.RemoveAt(rand);
+        }
+        
     }
 
 
@@ -26,4 +37,5 @@ public class BuildingManager : Singleton<BuildingManager>
         ActivateRandomBuilding();
     }
 
+    private bool AllBuildingAreColored => buildings.Count <= 0;
 }
