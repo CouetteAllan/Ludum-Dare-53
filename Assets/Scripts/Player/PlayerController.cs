@@ -1,11 +1,7 @@
-using Rayqdr.Inputs;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 /*
  *              With the help of @DawnosaurDev at youtube.com/c/DawnosaurStudios

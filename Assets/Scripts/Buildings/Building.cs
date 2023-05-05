@@ -76,7 +76,7 @@ public class Building : MonoBehaviour
         int rand;
         rand = Random.Range(0, Spots.Count);
         Spots[rand].SetActive(true);
-        UIManager.Instance.MainCamera = Camera.main;
+        UIManager.Instance.MainCamera = Helpers.Camera;
         UIManager.Instance.AddTargetIndicator(Spots[rand].gameObject);
     }
 
@@ -109,6 +109,11 @@ public class Building : MonoBehaviour
         effect.gameObject.GetComponent<Animator>().Play("New Animation",-1,0f);
         //effect.gameObject.GetComponent<Animator>().SetTrigger("Play");
         StartCoroutine(DelayResetAlpha(sprite));
+        if (GameManager.Instance.CurrentState == GameState.DrawState)
+        {
+            GameManager.Instance.ChangeGameState(GameState.Win);
+
+        }
     }
 
     private IEnumerator DelayResetAlpha(SpriteRenderer sprite)
@@ -148,6 +153,11 @@ public class Building : MonoBehaviour
         effect.gameObject.GetComponent<Animator>().Play("New Animation", -1, 0f);
         //effect.gameObject.GetComponent<Animator>().GetComponent<Animator>().SetTrigger("Play");
         StartCoroutine(DelayResetAlpha(sprite));
+        if(GameManager.Instance.CurrentState == GameState.DrawState)
+        {
+            GameManager.Instance.ChangeGameState(GameState.Win);
+
+        }
 
     }
 }

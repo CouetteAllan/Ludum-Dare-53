@@ -27,7 +27,7 @@ public class UIManager : Singleton<UIManager>
     [Space]
 
     public GameObject EndPanel;
-    public TMP_Text ScoreP1, ScoreP2, whowonText;
+    public EndPanelScript endPanelScript;
     public Button MenuButton2;
 
     [Header("Tuto")]
@@ -80,6 +80,7 @@ public class UIManager : Singleton<UIManager>
         {
             case GameState.MainMenu:
                 DisplayUI(false);
+                endPanelScript.OnEndAnimEvent -= EndPanelScript_OnEndAnimEvent;
                 break;
             case GameState.InGame:
                 DisplayUI(true);
@@ -224,23 +225,21 @@ public class UIManager : Singleton<UIManager>
     public void Win()
     {
         EndPanel.SetActive(true);
-        ScoreP1.text = GameManager.Instance.ScoreP1.ToString();
-        ScoreP2.text = GameManager.Instance.ScoreP2.ToString();
+        endPanelScript.OnEndAnimEvent += EndPanelScript_OnEndAnimEvent;
+        endPanelScript.StartEndAnim();
+        endPanelScript.SetWinnerSplashAndText(GameManager.Instance.WinnerIndex, GameManager.Instance.Winner);
+    }
 
+    private void EndPanelScript_OnEndAnimEvent()
+    {
         EventSystem.current.firstSelectedGameObject = MenuButton2.gameObject;
         MenuButton2.Select();
+    }
 
-        if (GameManager.Instance.ScoreP1 > GameManager.Instance.ScoreP2)
-        {
-            whowonText.text = "Player 1 Wins";
-        }
-        else if (GameManager.Instance.ScoreP1 < GameManager.Instance.ScoreP2)
-        {
-            whowonText.text = "Player 2 Wins";
-        }
-        else
-        {
-            whowonText.text = "Draw";
-        }
+    private void OnDisable()
+    {
+        endPanelScript.OnEndAnimEvent -= EndPanelScript_OnEndAnimEvent;
+        EventSystem.current.firstSelectedGameObject = MenuButton2.gameObject;
+        MenuButton2.Select();
     }
 }

@@ -12,7 +12,8 @@ public enum GameState
     DebutGame,
     InGame,
     Pause,
-    Win
+    Win,
+    DrawState
     //...
 }
 
@@ -39,6 +40,11 @@ public class GameManager : Singleton<GameManager>
 
     public  SelectedCharacterData Player2data { get; private set; }
     public float ScoreP2 { get; set; }
+
+    public SelectedCharacterData Winner { get; private set; }
+    public int WinnerIndex { get; private set; }
+
+    public bool IsDraw { get; private set; } = false;
 
     #endregion
 
@@ -70,6 +76,11 @@ public class GameManager : Singleton<GameManager>
                 Pause();
                 break;
             case GameState.Win:
+                SetWinner();
+                //Choisir le vainqueur du jeu
+                break;
+            case GameState.DrawState:
+                IsDraw = true;
                 break;
         }
 
@@ -86,35 +97,59 @@ public class GameManager : Singleton<GameManager>
         {
             yield return null;
         }
-        GlobalTimer = 180.0f;
+        GlobalTimer = 30.0f;
         ScoreP1 = 0f;
         ScoreP2 = 0f;
         ChangeGameState(GameState.DebutGame);
     }
 
 
-    public void InGame()
+    private void InGame()
     {
         //Resume legame
         Time.timeScale = 1.0f;
     }
 
-    public void ToMenu()
+    private void ToMenu()
     {
         SceneManager.LoadScene("BootScene");
         Time.timeScale = 1.0f;
     }
 
-    public void Pause()
+    private void Pause()
     {
         //maybe stop time ?
         Time.timeScale = 0.0f;
 
     }
+
+    private void SetWinner()
+    {
+        if(ScoreP1 == ScoreP2)
+        {
+            ChangeGameState(GameState.DrawState);
+            return;
+        }
+
+        if (ScoreP1 > ScoreP2)
+        {
+            Winner = Player1data;
+            WinnerIndex = 0; //Joueur 1
+        }
+        else if (ScoreP1 < ScoreP2)
+        {
+            Winner = Player2data;
+            WinnerIndex = 1; //Joueur 2
+        }
+
+        Time.timeScale = 0.5f;
+    }
     #endregion
 
     public void Update()
     {
+        if (IsDraw)
+            return;
         if(CurrentState == GameState.InGame)
         {
             GlobalTimer -= Time.deltaTime;
