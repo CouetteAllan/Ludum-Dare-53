@@ -142,7 +142,7 @@ public class GameManager : Singleton<GameManager>
             WinnerIndex = 1; //Joueur 2
         }
 
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.35f;
     }
     #endregion
 

@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour
     
     public SelectedCharacterData CharacterData { get { return characterData; } }
     [SerializeField] private Transform attachPackagePointTransform;
-    private bool hasPackage = false;
+    private bool hasPackage;
     public bool HasPackage { get { return hasPackage; } }
     private Package ownedPackage = null;
     public event Action<bool> OnPackageDrop;
@@ -68,6 +68,7 @@ public class PlayerScript : MonoBehaviour
         controller = GetComponent<PlayerController>();
         animator.runtimeAnimatorController = datas.animController;
         controller.OnDropDown += PassThroughPlatform;
+        hasPackage = false;
     }
 
     private void Start()

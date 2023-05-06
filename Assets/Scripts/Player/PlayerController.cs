@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
     private bool hasRecentlyDroppedPackage = false;
     #endregion
     [SerializeField] private ParticleHandle particles;
-    private bool playRunParticle = false;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -264,7 +263,8 @@ public class PlayerController : MonoBehaviour
 
         float movement = speedDif * accelRate;
 
-        movement = player.HasPackage ? movement / 1.25f : movement;
+        movement = player.HasPackage ? (movement / 7.5f) : movement;
+        Debug.Log("movement: " + movement + "has package ?: " + player.HasPackage);
         //Convert this to a vector and apply to rigidbody
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
     }
@@ -312,8 +312,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Dash()
     {
-        Data.jumpInputBufferTime = 0.5f;
-        player.PackageDropped(gotHit: false);
+        Data.jumpInputBufferTime = 0.7f;
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashCoroutine());
@@ -322,6 +321,7 @@ public class PlayerController : MonoBehaviour
     {
         float dashStartTime = Time.time;
         IsJumping = false;
+        player.PackageDropped(gotHit: false);
         animator.SetTrigger("Dash");
         bool dashedFromTheAir = LastOnGroundTime <= 0.02f;
 
