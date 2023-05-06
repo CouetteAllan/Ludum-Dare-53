@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
 
         float movement = speedDif * accelRate;
 
-        movement = player.HasPackage ? (movement / 7.5f) : movement;
+        movement = player.HasPackage ? (movement / 8.0f) : movement;
         Debug.Log("movement: " + movement + "has package ?: " + player.HasPackage);
         //Convert this to a vector and apply to rigidbody
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
