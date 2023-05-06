@@ -24,7 +24,7 @@ public class Building : MonoBehaviour
     private PlayerScript ownedPlayer;
 
     public GameObject effect;
-    public SpriteRenderer filter;
+    public SpriteRenderer buildingSprite;
 
     private void Start()
     {
@@ -56,11 +56,11 @@ public class Building : MonoBehaviour
                 break;
 
             case State.ColoredP1:
-                SetColoredP1();
+                SetColorPlayer(playerIndex: 1);
                 break;
 
             case State.ColoredP2:
-                SetColoredP2();
+                SetColorPlayer(playerIndex: 2);
                 break;
         }
     }
@@ -80,35 +80,48 @@ public class Building : MonoBehaviour
         UIManager.Instance.AddTargetIndicator(Spots[rand].gameObject);
     }
 
-    void SetColoredP1()
+
+    private void SetColorPlayer(int playerIndex)
     {
-        //mettre couleur p1p2
         var newColor = ownedPlayer.CharacterData.spriteColor;
-       // newColor.a = 1;
-        //graph.color = newColor;
+
+        var spriteEffect = effect.GetComponent<SpriteRenderer>();
         newColor.a = 0.35f;
-        var sprite = effect.GetComponent<SpriteRenderer>();
-        var tmp = sprite.color;
-        tmp.a = 0.35f;
-        sprite.color = tmp;
-        filter.color = newColor;
+        spriteEffect.color = newColor;
         foreach (var v in Spots)
         {
             v.SetActive(false);
         }
         PackageManager.Instance.SpawnPackage();
         BuildingManager.Instance.ActivateRandomBuilding();
-        if (CurrentState == State.ColoredP2)
-            GameManager.Instance.ScoreP2--;
-        else if (CurrentState == State.ColoredP1)
-            return;
-        GameManager.Instance.ScoreP1++;
 
-        CurrentState = State.ColoredP1;
+        #region Change Color for corresponding Player Index
+        if (playerIndex == 1)
+        {
+            if (CurrentState == State.ColoredP2)
+                GameManager.Instance.ScoreP2--;
+            else if (CurrentState == State.ColoredP1)
+                return;
+            GameManager.Instance.ScoreP1++;
+
+            CurrentState = State.ColoredP1;
+        }
+        else
+        {
+            if (CurrentState == State.ColoredP1)
+                GameManager.Instance.ScoreP1--;
+            else if (CurrentState == State.ColoredP2)
+                return;
+            GameManager.Instance.ScoreP2++;
+
+            CurrentState = State.ColoredP2;
+        }
+        #endregion
+
         effect.SetActive(true);
-        effect.gameObject.GetComponent<Animator>().Play("New Animation",-1,0f);
+        effect.gameObject.GetComponent<Animator>().Play("New Animation", -1, 0f);
         //effect.gameObject.GetComponent<Animator>().SetTrigger("Play");
-        StartCoroutine(DelayResetAlpha(sprite));
+        StartCoroutine(DelayResetAlpha(spriteEffect));
         if (GameManager.Instance.CurrentState == GameState.DrawState)
         {
             GameManager.Instance.ChangeGameState(GameState.Win);
@@ -120,44 +133,10 @@ public class Building : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         var tmp = sprite.color;
+        tmp.a = 1.0f;
+        buildingSprite.color = tmp;
         tmp.a = 0.0f;
         sprite.color = tmp;
     }
 
-    void SetColoredP2()
-    {
-        //mettre couleur p1p2
-        var newColor = ownedPlayer.CharacterData.spriteColor;
-       // newColor.a = 1;
-        //graph.color = newColor;
-        newColor.a = 0.35f;
-        var sprite = effect.GetComponent<SpriteRenderer>();
-        var tmp = sprite.color;
-        tmp.a = 0.35f;
-        sprite.color = tmp;
-        filter.color = newColor;
-        foreach (var v in Spots)
-        {
-            v.SetActive(false);
-        }
-        PackageManager.Instance.SpawnPackage();
-        BuildingManager.Instance.ActivateRandomBuilding();
-        if(CurrentState == State.ColoredP1)
-            GameManager.Instance.ScoreP1--;
-        else if (CurrentState == State.ColoredP2)
-            return;
-        GameManager.Instance.ScoreP2++;
-
-        CurrentState = State.ColoredP2;
-        effect.SetActive(true);
-        effect.gameObject.GetComponent<Animator>().Play("New Animation", -1, 0f);
-        //effect.gameObject.GetComponent<Animator>().GetComponent<Animator>().SetTrigger("Play");
-        StartCoroutine(DelayResetAlpha(sprite));
-        if(GameManager.Instance.CurrentState == GameState.DrawState)
-        {
-            GameManager.Instance.ChangeGameState(GameState.Win);
-
-        }
-
-    }
 }

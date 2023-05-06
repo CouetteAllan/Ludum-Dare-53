@@ -239,7 +239,5 @@ public class UIManager : Singleton<UIManager>
     private void OnDisable()
     {
         endPanelScript.OnEndAnimEvent -= EndPanelScript_OnEndAnimEvent;
-        EventSystem.current.firstSelectedGameObject = MenuButton2.gameObject;
-        MenuButton2.Select();
     }
 }

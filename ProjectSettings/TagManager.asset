@@ -43,3 +43,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Restaurant
+    uniqueID: 11510909
+    locked: 0
+  - name: Local
+    uniqueID: 1079318721
+    locked: 0
+  - name: Residence
+    uniqueID: 171417299
+    locked: 0
+  - name: Bootique
+    uniqueID: 579904061
+    locked: 0
+  - name: Tente
+    uniqueID: 553148933
+    locked: 0
+  - name: A
+    uniqueID: 2320504411
+    locked: 0
