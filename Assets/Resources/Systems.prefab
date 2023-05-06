@@ -106,22 +106,54 @@ MonoBehaviour:
   - name: MainMenuMusic
     clip: {fileID: 8300000, guid: 7a98c0ca3723ac94c8398570cd9a6766, type: 3}
     output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
-    volume: 0.543
+    volume: 0.653
     pitch: 0
     loop: 1
     playOnAwake: 1
     source: {fileID: 0}
-  - name: BGM
-    clip: {fileID: 8300000, guid: dc76bdc2225d12f4583d5a1c488a5449, type: 3}
+  - name: Victory
+    clip: {fileID: 8300000, guid: ed59d952a252b1446bfed89da96047ba, type: 3}
     output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
-    volume: 0.608
+    volume: 0.67
+    pitch: 0
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Game1
+    clip: {fileID: 8300000, guid: 4d94d02bb9b74764f8a6a29856b6ef97, type: 3}
+    output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.67
+    pitch: 0
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Game2
+    clip: {fileID: 8300000, guid: 3620465cd2ef6bc4591be4268399c0ce, type: 3}
+    output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.67
+    pitch: 0
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Game3
+    clip: {fileID: 8300000, guid: a52940f8ef03bb5478c28ad57731ba67, type: 3}
+    output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.67
+    pitch: 0
+    loop: 1
+    playOnAwake: 0
+    source: {fileID: 0}
+  - name: Game4
+    clip: {fileID: 8300000, guid: 4090d43fde4efa843873d707f91f6225, type: 3}
+    output: {fileID: 5028218121603704390, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
+    volume: 0.67
     pitch: 0
     loop: 1
     playOnAwake: 0
     source: {fileID: 0}
   audioMix: {fileID: 24100000, guid: a40e4b4d62982a942984baa06ffab5ce, type: 2}
   masterVolume: 0.5
-  musicVolume: 0.3
+  musicVolume: 0.5
   sfxVolume: 0.5
 --- !u!114 &5014447734189984674
 MonoBehaviour:

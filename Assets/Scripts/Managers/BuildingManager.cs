@@ -7,7 +7,9 @@ public class BuildingManager : Singleton<BuildingManager>
 {
     [SerializeField]
     private List<Building> buildings = new List<Building>();
+    public int BuildingCount { get; private set; }
     private List<Building> buildingsColored = new List<Building>();
+    public List<Building> BuildingsColored { get { return buildingsColored; } }
     
 
     public void ActivateRandomBuilding()
@@ -34,6 +36,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void Start()
     {
+        BuildingCount = buildings.Count;
         ActivateRandomBuilding();
     }
 

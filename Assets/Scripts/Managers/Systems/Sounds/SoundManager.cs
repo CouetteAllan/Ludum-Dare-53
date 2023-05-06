@@ -212,12 +212,16 @@ public class SoundManager : Singleton<SoundManager>
         s.source.volume = volume;
     }
 
-    public void StopAllSoud()
+    public void StopAllSound()
     {
         foreach (Sound s in soundsEffects)
         {
             s.source.Stop();
         }
+    }
+
+    public void StopAllMusics()
+    {
         foreach (Sound s in musics)
         {
             s.source.Stop();
