@@ -98,6 +98,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void CharacterSelect()
     {
+        SoundManager.Instance.Play("Splat");
         StartPanel.SetActive(false);
         CharacterSelectPanel.SetActive(true);
         EventSystem.current.firstSelectedGameObject = PlayButton.gameObject;
@@ -106,6 +107,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Settings()
     {
+        SoundManager.Instance.Play("Splat");
         StartPanel.SetActive(false);
         SettingsPanel.SetActive(true);
         EventSystem.current.firstSelectedGameObject = BackButton1.gameObject;

@@ -26,6 +26,10 @@ public class GlobalSoundPlay : MonoBehaviour
                 soundManager.StopAllMusics();
                 soundManager.PlayMusic("Victory");
                 break;
+
+            case GameState.Pause:
+                soundManager.ModifyMusicVolume(0.1f);
+                break;
             case GameState.MainMenu:
                 soundManager.StopAllMusics();
                 soundManager.PlayMusic("MainMenuMusic");

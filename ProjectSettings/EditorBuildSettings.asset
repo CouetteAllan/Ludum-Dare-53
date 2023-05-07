@@ -17,4 +17,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SceneQuentin.unity
     guid: 9234e3be06f75b54aa157eb51a88ddf8
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 29583420bddde4742bc85003b5b88f7a, type: 2}
