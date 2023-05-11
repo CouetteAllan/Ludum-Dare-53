@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//// TODO: Faire en sorte de pouvoir join depuis l'écran de multiplayer et de character select.
+//// TODO: Handle les index de selection pour les personnages et les boutons. Lancer une partie une fois que tous les joueurs aient choisis un personnage
+
+[RequireComponent(typeof(PlayerInputManager))]
 public class MultiPlayerManager : Singleton<MultiPlayerManager>
 {
     private List<PlayerScript> players = new List<PlayerScript>();
@@ -14,7 +18,6 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
     protected override void Awake()
     {
         base.Awake();
-        spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
     }
 
     private void Start()
@@ -37,6 +40,7 @@ public class MultiPlayerManager : Singleton<MultiPlayerManager>
             case GameState.StartGame:
                 break;
             case GameState.DebutGame:
+                spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
                 SpawnPlayer();
                 break;
         }
